@@ -1,4 +1,11 @@
 /* --- 1. ESTILOS BASE --- */
+@font-face {
+    font-family: 'LT Gutbust';
+    /* Asumimos que es .ttf, que es lo más común. */
+    src: url('Fonts/LTGutbust-Bold-v3.ttf') format('truetype'); 
+    font-weight: normal;
+    font-style: normal;
+}
 * {
     margin: 0;
     padding: 0;
@@ -25,13 +32,20 @@ body {
 }
 
 .logo {
-    font-family: 'Montserrat', sans-serif; /* Usamos la letra limpia */
-    font-weight: 700; /* La hacemos negrita para que resalte */
-    font-size: 32px;
+    font-family: 'LT Gutbust', sans-serif; /* <-- Aplicamos la nueva fuente */
+    font-size: 32px; 
     display: flex;
     align-items: center;
     gap: 10px;
     margin-right: auto;
+}
+.logo-x {
+    font-size: 40px; /* El tamaño base es 32px, así que 45px la hará resaltar */
+}
+
+/* Pintar 'Paseando' de azul marino */
+.logo-paseando {
+    color: #e8e8e8; /* Este es el azul marino exacto que usamos de fondo antes */
 }
 
 .logo-img {
@@ -121,7 +135,7 @@ body {
 }
 
 .title-cursive {
-    font-family: 'Montserrat', sans-serif; /* Usamos la letra limpia */
+    font-family: 'Outfit', sans-serif;/* Usamos la letra limpia */
     font-weight: 400; /* La dejamos más delgada para que contraste con "Xalapa" */
     font-size: 50px; /* Ajustamos un poco el tamaño */
     line-height: 1.2;
