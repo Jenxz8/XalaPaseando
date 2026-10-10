@@ -1,0 +1,190 @@
+/* --- 1. ESTILOS BASE --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #0d1b2a; 
+    color: white;
+    overflow-x: hidden; /* Evita que la página se mueva hacia los lados */
+}
+
+/* --- 2. BARRA DE NAVEGACIÓN --- */
+.navbar {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 50px;
+    z-index: 10;
+}
+
+.logo {
+    font-family: 'Dancing Script', cursive;
+    font-size: 32px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.logo-pin {
+    color: #ff3b30; /* Color rojo del pin */
+    font-size: 24px;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 30px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: white;
+    font-size: 14px;
+    transition: color 0.3s;
+}
+
+.nav-links a:hover, .nav-links a.active {
+    color: #ff3b30;
+    border-bottom: 2px solid #ff3b30;
+    padding-bottom: 5px;
+}
+
+.nav-icons {
+    display: flex;
+    gap: 20px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+/* --- 3. SECCIÓN PRINCIPAL Y FONDO --- */
+.hero {
+    position: relative;
+    height: 100vh; /* Ocupa el 100% del alto de la pantalla */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 10%;
+    
+    /* IMAGEN DE FONDO: Puedes cambiar esta URL por una foto tuya de Xalapa */
+    background: url('https://images.unsplash.com/photo-1518182170546-076616fd4025?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Degradado oscuro de izquierda a derecha */
+    background: linear-gradient(to right, rgba(13, 27, 42, 0.95) 0%, rgba(13, 27, 42, 0.3) 100%);
+    z-index: 1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 600px;
+    margin-bottom: 50px;
+}
+
+.title-main {
+    font-size: 80px;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.title-cursive {
+    font-family: 'Dancing Script', cursive;
+    font-size: 60px;
+    font-weight: 400;
+    line-height: 1.2;
+    color: #f8f9fa;
+}
+
+.hero-content p {
+    margin-top: 20px;
+    font-size: 18px;
+    line-height: 1.5;
+    color: #e0e0e0;
+}
+
+/* --- 4. ANIMACIÓN DE ENTRADA (FADE UP) --- */
+.animate-fade-up {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeUp 1s forwards ease-out;
+}
+
+/* Retrasos para que los elementos aparezcan uno tras otro */
+.delay-1 { animation-delay: 0.3s; }
+.delay-2 { animation-delay: 0.6s; }
+
+@keyframes fadeUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* --- 5. CARRUSEL AUTOMÁTICO DE EVENTOS --- */
+.scrolling-wrapper {
+    position: absolute;
+    bottom: 40px; 
+    left: 0;
+    width: 100%;
+    overflow: hidden; 
+    z-index: 2;
+}
+
+.scrolling-cards {
+    display: flex;
+    gap: 20px;
+    width: max-content;
+    /* La magia del movimiento infinito */
+    animation: scroll-left 20s linear infinite;
+}
+
+/* Pausar cuando pones el ratón encima */
+.scrolling-wrapper:hover .scrolling-cards {
+    animation-play-state: paused;
+}
+
+/* Diseño de cada cuadrito */
+.card {
+    background: rgba(255, 255, 255, 0.1); /* Fondo cristalino */
+    backdrop-filter: blur(10px); /* Efecto de desenfoque */
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 20px 30px;
+    border-radius: 15px;
+    min-width: 250px;
+    color: white;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px); /* Se levanta al pasar el mouse */
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.card h3 {
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.card p {
+    font-size: 14px;
+    color: #ccc;
+}
+
+@keyframes scroll-left {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(calc(-50% - 10px)); }
+}
