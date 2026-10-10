@@ -29,7 +29,12 @@ body {
     font-size: 32px;
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 10px; /* Un poco más de espacio entre el texto y la imagen */
+}
+.logo-img {
+    height: 35px; /* Ajusta este valor si prefieres que la imagen sea más pequeña o grande */
+    width: auto;  /* Mantiene la proporción original */
+    object-fit: contain;
 }
 
 .logo-pin {
