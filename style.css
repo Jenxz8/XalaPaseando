@@ -286,7 +286,7 @@ body {
     border-radius: 12px;
     padding: 20px;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around; /* Cambiamos space-between por space-around */
     margin-bottom: 40px;
 }
 .cat-item {
@@ -337,3 +337,57 @@ body {
 }
 .etiqueta.roja { background-color: #d90429; }
 .etiqueta.oscura { background-color: #2b2b2b; }
+
+/* =========================================
+   DISEÑO RESPONSIVO (TELÉFONOS Y TABLETS)
+   ========================================= */
+@media (max-width: 768px) {
+    
+    /* 1. BARRA DE NAVEGACIÓN EN MÓVIL */
+    .navbar {
+        padding: 15px 20px; /* Reducimos los espacios a los lados */
+    }
+    
+    .logo {
+        font-size: 24px; /* Hacemos el logo más pequeño */
+    }
+    
+    .logo-x {
+        font-size: 32px; /* Reducimos la 'X' */
+    }
+    
+    .logo-img {
+        height: 25px; /* Hacemos el pin más pequeño */
+    }
+
+    /* Ocultamos los textos del menú ("Inicio", "Explora") para dejar solo la lupa y las 3 barras */
+    .nav-links {
+        display: none; 
+    }
+
+    /* 2. TEXTOS PRINCIPALES (INDEX) */
+    .hero {
+        padding-left: 20px;
+        padding-right: 20px;
+        align-items: center; /* Centramos el contenido */
+        text-align: center;  /* Centramos el texto */
+    }
+
+    .title-main {
+        font-size: 50px; /* Reducimos el tamaño de "Xalapa" */
+    }
+
+    .title-cursive {
+        font-size: 35px; /* Reducimos el subtítulo */
+    }
+
+    .hero-content p {
+        font-size: 15px; /* Reducimos la descripción */
+        margin-top: 15px;
+    }
+    
+    /* Le damos espacio al carrusel para que no tape el texto en pantallas pequeñas */
+    .hero-content {
+        margin-bottom: 120px; 
+    }
+}
