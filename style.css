@@ -341,53 +341,73 @@ body {
 /* =========================================
    DISEÑO RESPONSIVO (TELÉFONOS Y TABLETS)
    ========================================= */
+/* =========================================
+   DISEÑO RESPONSIVO (TELÉFONOS Y TABLETS)
+   ========================================= */
 @media (max-width: 768px) {
     
     /* 1. BARRA DE NAVEGACIÓN EN MÓVIL */
     .navbar {
-        padding: 15px 20px; /* Reducimos los espacios a los lados */
+        padding: 15px 20px; 
     }
     
     .logo {
-        font-size: 24px; /* Hacemos el logo más pequeño */
+        font-size: 24px; 
     }
     
     .logo-x {
-        font-size: 32px; /* Reducimos la 'X' */
+        font-size: 32px; 
     }
     
     .logo-img {
-        height: 25px; /* Hacemos el pin más pequeño */
+        height: 25px; 
     }
 
-    /* Ocultamos los textos del menú ("Inicio", "Explora") para dejar solo la lupa y las 3 barras */
     .nav-links {
         display: none; 
     }
 
-    /* 2. TEXTOS PRINCIPALES (INDEX) */
+    /* FIX: Quitamos el margen gigante de PC para eliminar el scroll horizontal */
+    .nav-icons {
+        margin-left: 0; 
+        gap: 15px; 
+    }
+
+    /* 2. TEXTOS PRINCIPALES Y FIX DEL FONDO AZUL */
     .hero {
         padding-left: 20px;
         padding-right: 20px;
-        align-items: center; /* Centramos el contenido */
-        text-align: center;  /* Centramos el texto */
+        align-items: center; 
+        text-align: center;  
+        
+        /* FIX: Permitimos que la imagen de fondo crezca si el celular es muy pequeño */
+        height: auto; 
+        min-height: 100vh; 
+        justify-content: center;
+        padding-top: 80px; /* Evita que el texto choque con el menú arriba */
+        padding-bottom: 100px; /* Evita que el texto choque con el carrusel abajo */
+    }
+
+    /* Reducimos el empuje hacia arriba para que todo encaje mejor en una sola pantalla */
+    .hero-content {
+        margin-bottom: 0; 
     }
 
     .title-main {
-        font-size: 50px; /* Reducimos el tamaño de "Xalapa" */
+        font-size: 45px; /* Un poco más pequeño para que cuadre perfecto */
     }
 
     .title-cursive {
-        font-size: 35px; /* Reducimos el subtítulo */
+        font-size: 30px; 
     }
 
     .hero-content p {
-        font-size: 15px; /* Reducimos la descripción */
+        font-size: 15px; 
         margin-top: 15px;
     }
     
-    /* Le damos espacio al carrusel para que no tape el texto en pantallas pequeñas */
-    .hero-content {
-        margin-bottom: 120px; 
+    /* Ajustamos la posición de los eventos un poco más abajo */
+    .scrolling-wrapper {
+        bottom: 20px;
     }
 }
