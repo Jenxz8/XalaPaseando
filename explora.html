@@ -5,78 +5,157 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Explora - XalaPaseando</title>
     <link rel="icon" type="image/png" href="Icons/Icono.png">
-    
-    <!-- Aquí conectamos el MISMO archivo de estilos -->
     <link rel="stylesheet" href="style.css">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
 </head>
-<!-- Le ponemos una clase al body para que el fondo de ESTA página sea blanco -->
 <body class="tema-claro">
 
-    <!-- BARRA DE NAVEGACIÓN (Igual a la de inicio, pero "Explora" está activa) -->
+    
     <nav class="navbar">
         <div class="logo">
-            <span class="logo-text">XalaPaseando</span>
+            <span class="logo-text">
+                <span class="logo-x">X</span>ala<span class="logo-paseando">Paseando</span>
+            </span>
             <img src="Icons/Icono_Ubi.png" alt="Logotipo" class="logo-img">
         </div>
         <ul class="nav-links">
             <li><a href="index.html">Inicio</a></li>
             <li><a href="explora.html" class="active">Explora</a></li>
-            <li><a href="#">Eventos</a></li>
+            <li><a href="eventos.html">Eventos</a></li>
             <li><a href="#">Comunidad</a></li>
         </ul>
         <div class="nav-icons">
            <img src="Icons/Icono_Lupa.png" alt="Buscar" class="icon-img">
-            <span class="icon">☰</span>
+            <span class="icon" style="color: white;">☰</span>
         </div>
     </nav>
 
-    <!-- CONTENIDO PRINCIPAL DE EXPLORA -->
+    
     <main class="contenedor-explora">
         
         <div class="encabezado-seccion">
             <h2>Explora por categoría</h2>
-            <a href="#" class="ver-todas">Ver todas ➔</a>
         </div>
         
-        <!-- BARRA OSCURA DE CATEGORÍAS -->
-        <!-- BARRA OSCURA DE CATEGORÍAS -->
+        
         <section class="categorias-bar">
-            <div class="cat-item"><div class="cat-icon">Void</div><span>Restaurantes</span></div>
-            <div class="cat-item"><div class="cat-icon">Void</div><span>Cultura y cine</span></div>
-            <div class="cat-item"><div class="cat-icon">Void</div><span>Galerías y arte</span></div>
-            <div class="cat-item"><div class="cat-icon">Void</div><span>Naturaleza</span></div>
-        </section>
-        <!-- SECCIÓN: RECOMENDACIONES -->
-        <div class="encabezado-seccion mt-40">
-            <div>
-                <h2 class="titulo-azul">Recomendaciones para tu presupuesto</h2>
-                <button class="btn-presupuesto">$ 0 - $300 <span>⌄</span></button>
-            </div>
-            <a href="#" class="ver-todas align-bottom">Ver más ➔</a>
-        </div>
-
-        <!-- TARJETAS -->
-        <section class="grid-tarjetas">
-            <div class="tarjeta">
-                <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" alt="Café">
-                <div class="tarjeta-cuerpo">
-                    <span class="etiqueta roja">Restaurantes</span>
-                    <h3>La Casona del Café</h3>
-                    <p>Café de especialidad y platillos típicos en un ambiente muy xalapeño.</p>
-                </div>
+            
+            <div class="cat-item" onclick="cambiarCategoria('restaurantes', 'Restaurantes y Cafés', 'Disfruta de la mejor gastronomía, desde el tradicional café de altura hasta antojitos locales.')">
+                <div class="cat-icon"><img src="Icons/restaurante.png" alt="Restaurantes"></div>
+                <span>Restaurantes</span>
             </div>
             
-            <div class="tarjeta">
-                <img src="https://images.unsplash.com/photo-1572085313466-6710de8d7ba3?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" alt="Parque">
-                <div class="tarjeta-cuerpo">
-                    <span class="etiqueta oscura">Experiencias</span>
-                    <h3>Paseo por el Parque Juárez</h3>
-                    <p>Ideal para una tarde tranquila, rodeado de naturaleza y buena vibra.</p>
-                </div>
+            <div class="cat-item" onclick="cambiarCategoria('cultura', 'Cultura y Cine', 'Descubre teatros, foros independientes y recintos culturales en la Atenas Veracruzana.')">
+                <div class="cat-icon"><img src="Icons/cine.png" alt="Cultura y cine"></div>
+                <span>Cultura y cine</span>
             </div>
+            
+            <div class="cat-item" onclick="cambiarCategoria('arte', 'Galerías y Arte', 'Exposiciones de artistas locales, pintura, escultura y arte contemporáneo.')">
+                <div class="cat-icon"><img src="Icons/galeria.png" alt="Galerías y arte"></div>
+                <span>Galerías y arte</span>
+            </div>
+            
+            <div class="cat-item" onclick="cambiarCategoria('naturaleza', 'Naturaleza y Parques', 'Respira aire puro en los famosos parques, jardines y senderos boscosos de la ciudad.')">
+                <div class="cat-icon"><img src="Icons/naturaleza.png" alt="Naturaleza"></div>
+                <span>Naturaleza</span>
+            </div>
+        </section>
+
+        
+        <div class="encabezado-seccion mt-40" style="align-items: flex-start; flex-direction: column; gap: 15px;">
+            <div>
+                <h2 class="titulo-azul" id="titulo-categoria">Restaurantes y Cafés</h2>
+                <p class="subtitulo" id="desc-categoria">Disfruta de la mejor gastronomía, desde el tradicional café de altura hasta antojitos locales.</p>
+            </div>
+            
+            
+            <select class="btn-presupuesto" id="filtro-precio" onchange="filtrarLugares()">
+                <option value="todos">Todos los precios ⌄</option>
+                <option value="gratis">Entrada Libre / $0</option>
+                <option value="barato">Económico ($50 - $150)</option>
+                <option value="medio">Moderado ($151 - $300)</option>
+                <option value="caro">Exclusivo (Más de $300)</option>
+            </select>
+        </div>
+
+        
+        <section class="grid-tarjetas" id="contenedor-lugares">
+            
         </section>
 
     </main>
+
+    
+    
+    
+    <script>
+
+        const lugares = [
+
+            { categoria: 'restaurantes', nombre: 'Lulú Café', desc: 'Un espacio estético y tranquilo para probar métodos de extracción de café.', tag: 'Cafetería', color: 'roja', ubi: 'Zona Centro', precioTxt: '$100 - $150', nivelPrecio: 'barato', img: 'https://images.unsplash.com/photo-1554118811-1e0d58224f24' },
+            { categoria: 'restaurantes', nombre: 'La Estancia de los Tecajetes', desc: 'Antojitos xalapeños y buffet con una vista hermosa rodeada de naturaleza.', tag: 'Tradicional', color: 'azul', ubi: 'Ávila Camacho', precioTxt: '$250 - $300', nivelPrecio: 'medio', img: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4' },
+            { categoria: 'restaurantes', nombre: 'Asadero Cien', desc: 'El lugar por excelencia para cortes finos de carne y un servicio de primera.', tag: 'Cortes', color: 'oscura', ubi: 'Maestros Veracruzanos', precioTxt: '$350 - $600', nivelPrecio: 'caro', img: 'https://images.unsplash.com/photo-1544148103-0773bf10d330' },
+
+            { categoria: 'cultura', nombre: 'Teatro J.J. Herrera', desc: 'Foro histórico que presenta obras de teatro independientes y proyecciones de cine de arte.', tag: 'Teatro', color: 'roja', ubi: 'Calle Miguel Palacios', precioTxt: 'Entrada Libre', nivelPrecio: 'gratis', img: 'https://images.unsplash.com/photo-1507676184212-d0330a15233c' },
+
+            { categoria: 'arte', nombre: 'Galería de Arte Contemporáneo', desc: 'Exposiciones de artistas nacionales e internacionales en una casona colonial remodelada.', tag: 'Exposición', color: 'azul', ubi: 'Xalapeños Ilustres', precioTxt: 'Entrada Libre', nivelPrecio: 'gratis', img: 'https://images.unsplash.com/photo-1518998053401-a4149019841c' },
+
+            { categoria: 'naturaleza', nombre: 'Parque Ecológico Macuiltépetl', desc: 'El cerro emblemático de la ciudad. Ideal para hacer senderismo, correr o un picnic.', tag: 'Parque', color: 'oscura', ubi: 'Volcán Macuiltépetl', precioTxt: 'Entrada Libre', nivelPrecio: 'gratis', img: 'https://images.unsplash.com/photo-1572085313466-6710de8d7ba3' },
+            { categoria: 'naturaleza', nombre: 'Jardín Botánico Clavijero', desc: 'Una de las colecciones de plantas más importantes del país, con senderos boscosos.', tag: 'Naturaleza', color: 'roja', ubi: 'Carretera Antigua a Coatepec', precioTxt: '$50', nivelPrecio: 'barato', img: 'https://images.unsplash.com/photo-1588628566587-bf6ac7ad770c' }
+        ];
+
+        let categoriaActual = 'restaurantes';
+
+        function cambiarCategoria(nuevaCategoria, titulo, descripcion) {
+            categoriaActual = nuevaCategoria;
+            document.getElementById('titulo-categoria').innerText = titulo;
+            document.getElementById('desc-categoria').innerText = descripcion;
+
+            document.getElementById('filtro-precio').value = 'todos'; 
+            
+            filtrarLugares();
+        }
+
+        function filtrarLugares() {
+            const contenedor = document.getElementById('contenedor-lugares');
+            const filtroPrecio = document.getElementById('filtro-precio').value;
+
+            contenedor.innerHTML = '';
+
+            const lugaresFiltrados = lugares.filter(lugar => {
+
+                if (lugar.categoria !== categoriaActual) return false;
+
+                if (filtroPrecio === 'todos') return true;
+                if (lugar.nivelPrecio === filtroPrecio) return true;
+                return false;
+            });
+
+            if(lugaresFiltrados.length === 0) {
+                contenedor.innerHTML = '<p style="color: #666; font-size: 16px; margin-top: 20px;">No hay lugares registrados con este presupuesto en esta categoría.</p>';
+                return;
+            }
+
+            lugaresFiltrados.forEach(lugar => {
+                const htmlTarjeta = `
+                <div class="tarjeta">
+                    <img src="${lugar.img}?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" alt="${lugar.nombre}">
+                    <div class="tarjeta-cuerpo">
+                        <span class="etiqueta ${lugar.color}">${lugar.tag}</span>
+                        <h3>${lugar.nombre}</h3>
+                        <p>${lugar.desc}</p>
+                        <div class="tarjeta-pie mt-10">
+                            <span>📍 ${lugar.ubi}</span>
+                            <span> ${lugar.precioTxt}</span>
+                        </div>
+                    </div>
+                </div>`;
+
+                contenedor.innerHTML += htmlTarjeta;
+            });
+        }
+
+        window.onload = () => filtrarLugares();
+    </script>
 </body>
 </html>
