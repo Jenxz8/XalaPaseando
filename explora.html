@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explora - XalaPaseando</title>
+    <link rel="icon" type="image/png" href="Icons/Icono.png">
+    
+    <!-- Aquí conectamos el MISMO archivo de estilos -->
+    <link rel="stylesheet" href="style.css">
+    
+</head>
+<!-- Le ponemos una clase al body para que el fondo de ESTA página sea blanco -->
+<body class="tema-claro">
+
+    <!-- BARRA DE NAVEGACIÓN (Igual a la de inicio, pero "Explora" está activa) -->
+    <nav class="navbar">
+        <div class="logo">
+            <span class="logo-text">XalaPaseando</span>
+            <img src="Icons/Icono_Ubi.png" alt="Logotipo" class="logo-img">
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="explora.html" class="active">Explora</a></li>
+            <li><a href="#">Eventos</a></li>
+            <li><a href="#">Comunidad</a></li>
+        </ul>
+        <div class="nav-icons">
+           <img src="Icons/Icono_Lupa.png" alt="Buscar" class="icon-img">
+            <span class="icon">☰</span>
+        </div>
+    </nav>
+
+    <!-- CONTENIDO PRINCIPAL DE EXPLORA -->
+    <main class="contenedor-explora">
+        
+        <div class="encabezado-seccion">
+            <h2>Explora por categoría</h2>
+            <a href="#" class="ver-todas">Ver todas ➔</a>
+        </div>
+        
+        <!-- BARRA OSCURA DE CATEGORÍAS -->
+        <section class="categorias-bar">
+            <div class="cat-item"><div class="cat-icon">Res</div><span>Restaurantes</span></div>
+            <div class="cat-item"><div class="cat-icon">Caf</div><span>Cafés y bares</span></div>
+            <div class="cat-item"><div class="cat-icon">NONE</div><span>Galerías de arte</span></div>
+            <div class="cat-item"><div class="cat-icon">none</div><span>Experiencias</span></div>
+            <div class="cat-item"><div class="cat-icon">none</div><span>Tours</span></div>
+            <div class="cat-item"><div class="cat-icon">none</div><span>Naturaleza</span></div>
+            <div class="cat-item"><div class="cat-icon">none</div><span>Eventos</span></div>
+        </section>
+
+        <!-- SECCIÓN: RECOMENDACIONES -->
+        <div class="encabezado-seccion mt-40">
+            <div>
+                <h2 class="titulo-azul">Recomendaciones para tu presupuesto</h2>
+                <button class="btn-presupuesto">$ 0 - $300 <span>⌄</span></button>
+            </div>
+            <a href="#" class="ver-todas align-bottom">Ver más ➔</a>
+        </div>
+
+        <!-- TARJETAS -->
+        <section class="grid-tarjetas">
+            <div class="tarjeta">
+                <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" alt="Café">
+                <div class="tarjeta-cuerpo">
+                    <span class="etiqueta roja">Restaurantes</span>
+                    <h3>La Casona del Café</h3>
+                    <p>Café de especialidad y platillos típicos en un ambiente muy xalapeño.</p>
+                </div>
+            </div>
+            
+            <div class="tarjeta">
+                <img src="https://images.unsplash.com/photo-1572085313466-6710de8d7ba3?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" alt="Parque">
+                <div class="tarjeta-cuerpo">
+                    <span class="etiqueta oscura">Experiencias</span>
+                    <h3>Paseo por el Parque Juárez</h3>
+                    <p>Ideal para una tarde tranquila, rodeado de naturaleza y buena vibra.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+</body>
+</html>
