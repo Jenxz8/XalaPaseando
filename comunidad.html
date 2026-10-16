@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comunidad - XalaPaseando</title>
+    <link rel="icon" type="image/png" href="Icons/Icono.png">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+</head>
+<body class="tema-claro">
+
+    <!-- BARRA DE NAVEGACIÓN -->
+    <nav class="navbar">
+        <div class="logo">
+            <span class="logo-text"><span class="logo-x">X</span>ala<span class="logo-paseando">Paseando</span></span>
+            <img src="Icons/Icono_Ubi.png" alt="Logotipo" class="logo-img">
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="explora.html">Explora</a></li>
+            <li><a href="eventos.html">Eventos</a></li>
+            <li><a href="comunidad.html" class="active">Comunidad</a></li>
+        </ul>
+        <div class="nav-icons">
+           <img src="Icons/Icono_Lupa.png" alt="Buscar" class="icon-img">
+            <span class="icon" style="color: white;">☰</span>
+        </div>
+    </nav>
+
+    <main class="contenedor-explora">
+        
+        <!-- BANNER DE INSTAGRAM -->
+        <div style="background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); border-radius: 12px; padding: 25px; text-align: center; color: white; margin-top: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+            <h3 style="margin-bottom: 10px; font-size: 22px;">📸 ¡Únete a nuestra comunidad!</h3>
+            <p style="margin-bottom: 20px; font-size: 15px;">Comparte tus mejores fotos de Xalapa, descubre nuevos rincones y entérate de las últimas novedades.</p>
+            <a href="" target="_blank" style="background: white; color: #dc2743; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; font-size: 14px; display: inline-block; transition: 0.3s;">Síguenos en Instagram</a>
+        </div>
+
+        <!-- ENCABEZADO Y FILTRO -->
+        <div class="encabezado-seccion mt-40" style="align-items: flex-start; flex-direction: column; gap: 15px;">
+            <div>
+                <a href="explora.html" style="text-decoration: none; color: #d90429; font-weight: 600; font-size: 14px;">← Volver a Explora</a>
+                <h2 class="titulo-azul" id="nombre-lugar" style="margin-top: 10px;">Cargando...</h2>
+                <div style="display: flex; align-items: center; gap: 10px; margin-top: 5px;">
+                    <span id="estrellas-lugar" style="color: #ffb703; font-size: 20px;"></span>
+                    <span id="calificacion-lugar" style="font-weight: 600; color: #555;"></span>
+                </div>
+            </div>
+            
+            <!-- FILTRO DE ESTRELLAS -->
+            <select class="btn-presupuesto" style="background-color: #ffb703; color: #0d1b2a;" id="filtro-estrellas-comunidad" onchange="aplicarFiltro()">
+                <option value="todas">Todas las calificaciones ⭐</option>
+                <option value="5">5 Estrellas ⭐⭐⭐⭐⭐</option>
+                <option value="4">4 Estrellas ⭐⭐⭐⭐</option>
+                <option value="3">3 Estrellas ⭐⭐⭐</option>
+                <option value="2">2 Estrellas ⭐⭐</option>
+                <option value="1">1 Estrella ⭐</option>
+            </select>
+        </div>
+
+        <!-- CONTENEDOR DE RESEÑAS -->
+        <div id="contenedor-resenas" style="display: flex; flex-direction: column; gap: 20px; margin-top: 30px;">
+            <!-- Las reseñas se inyectan aquí -->
+        </div>
+
+        <!-- BOTÓN DE CARGAR MÁS -->
+        <div style="text-align: center; margin-top: 30px;">
+            <button id="btn-cargar-mas" class="btn-asistir" style="display: none; width: auto; padding: 12px 30px;" onclick="cargarMasResenas()">Ver más reseñas ⬇</button>
+        </div>
+
+    </main>
+
+    <!-- SCRIPT DE JAVASCRIPT -->
+    <script>
+       // 1. BASE DE DATOS DE RESEÑAS ESPECÍFICAS
+        const bdComunidad = {
+            'lulu-cafe': {
+                nombre: 'Lulú Café',
+                calificacion: '4.5',
+                estrellasTxt: '⭐⭐⭐⭐',
+                resenas: [
+                    { autor: 'Aime Grisel Ramos', estrellas: 4, texto: 'El café es delicioso.<br>El emparedado de pollo al pesto es rico.<br>La cafetería ofrece opciones únicas en su menú de alimentos, pero podría ser un poco más sencillo para algunos.<br>En cuanto al costo, puede ser alto para algunos.<br>El ambiente es tranquilo. El local también cuenta con sus reglas de funcionamiento.<br>El café lo vale.', fecha: 'Hace 8 meses' },
+                    { autor: 'Karenka Nátoly', estrellas: 3, texto: 'La verdad me recomendaron venir a esta cafetería pero sinceramente me arrepiento, el servicio está ok, pero como solo era yo no puedo decir que tanto tardan cuando hay gente, me sorprende que las promociones son muy pequeñas para el precio, pedí un pastel de chocolate y un frappé, al pastel le agregaron un crema que sabía mucho a refrigerada, el frappé no tenían ni un chiste, solo era el hielo molido con el café, si quería crema batida eran otros 15 pesos (?) sinceramente no recomiendo para nada, no tienen variedad de postres siendo una cafetería que normalmente son los fuertes, el precio por las porciones deja mucho que desear, realmente me arrepiento de haber perdido mi dinero en algo que ni disfruté.', fecha: 'Hace 3 meses' },
+                    { autor: 'Anel Morales', estrellas: 5, texto: 'Verdaderamente el café es delicioso, y la comida lo es mejor, me pedí un Lulú Madame (platillo de la casa), la salsa bechamel con que lo bañan, realmente es una delicia. Por otro lado, de tomar pedí la especialidad de temporada, una bebida de nombre "Valentín", expreso preparado con cremas y frutos rojos. De verdad que el ambiente es de lo más agradable y atento.', fecha: 'Hace 7 meses' },
+                    { autor: 'Christian Camacho', estrellas: 5, texto: 'Me encantó Lulú Café, es tan tranquilo y acogedor. Pedí chilaquiles con salsa de frijol con pollo y un chai latte de té negro. Ambos estuvieron deliciosos. La porción de los chilaquiles fue suficiente,el chai estaba bien equilibrado y se sentía natural, se nota la presencia de las distintas especias. Toda la carta me pareció bastante asequible.', fecha: 'Hace 11 meses' },
+                    { autor: 'paulina rojano', estrellas: 5, texto: 'Ame con toda el alma el baguette de serrano! Es muy bueno los sabores se combinan perfecto. La música es relajante pero buena, la bebida que pedí tambien estaba perfecta. Vale la pena cada peso gastado.', fecha: 'Hace 9 meses' },
+                    { autor: 'Surimi', estrellas: 5, texto: 'Quedé muy satisfecha respecto al servicio y la calidad de los productos. Me llevó una buena experiencia con la amabilidad y disposición del barista. :)', fecha: 'Hace 7 meses' },
+                    { autor: 'María G.', estrellas: 5, texto: 'El mejor café de especialidad en Xalapa. El ambiente es súper tranquilo.', fecha: 'Hace 1 año' },
+                    { autor: 'Jorge M.', estrellas: 5, texto: 'Muy buenos métodos de extracción. Recomiendo el V60.', fecha: 'Hace 1 año' },
+                    { autor: 'Diana P.', estrellas: 4, texto: 'Bonito lugar, buen internet para ir a trabajar un rato.', fecha: 'Hace 1 año' },
+                    { autor: 'Luis F.', estrellas: 4, texto: 'El café es bueno, un lugar muy estético.', fecha: 'Hace 1 año' },
+                    { autor: 'Pedro H.', estrellas: 5, texto: 'Lugar obligado si visitas el centro de Xalapa.', fecha: 'Hace 1 año' },
+                    { autor: 'Valeria C.', estrellas: 4, texto: 'Muy rico todo.', fecha: 'Hace 1 año' }
+                ]
+            },
+            
+            'tecajetes': {
+                nombre: 'La Estancia de los Tecajetes',
+                calificacion: '4.4',
+                estrellasTxt: '⭐⭐⭐⭐',
+                resenas: [
+                    { autor: 'Sac Hergali', estrellas: 3, texto: 'Vine de visita a Xalapa y me recomendaron este lugar por ser un clásico xalapeño y por lo que pude ver, seguramente lo es por lo bonito del lugar.<br><br>Nuestros platillos estuvieron insípidos. La porción de los huevos con enfrijoladas es muy pequeña, los chilaquiles de la casa todo lo contrario, aunque la salsa estaba sin condimentar. El café no estaba tan mal, tenía buen sabor, aunque para la zona que tengo entendido es muy cafetera pues... no destacaba tanto.<br><br>El servicio fue muy bueno. El chico que nos atendió fue muy amable y atento. El lugar es agradable y cómodo.', fecha: 'Hace 3 meses' },
+                    { autor: 'Danny T', estrellas: 5, texto: 'Beautiful setting within the trees. Great service and food. The prices were also reasonable. You can go to a walk next door once you’re done. I ordered the papaya with yougurt and the omelette Niebla.', fecha: 'Hace un mes' },
+                    { autor: 'Victor Garcia Kassab', estrellas: 5, texto: 'Muy recomendable.<br><br>De mis lugares favoritos para desayunar. Un lugar cercano al centro de la ciudad, por la colindancia al parque los Tecajetes, te desconectas de la urbe.<br><br>El sabor de la comida es deliciosa, mi favorito para el desayuno “Ropa vieja ”.<br><br>En domingo el lugar es concurrido, música en vivo. Aunque el estacionamiento es reducido cuenta con valet parking.', fecha: 'Hace 4 meses' },
+                    { autor: 'Gonzalo T', estrellas: 5, texto: 'Es una gran experiencia, sobre todo después de caminar por el parque.<br><br>Toda la comida está súper rica, nos recibieron con una salsa que hicieron en molcajete al momento, estaba deliciosa. Las tortillas hechas a mano son fantásticas, la salsa de chile seco y de habanero también muy ricas.<br><br>Los platillos son bien servidos, porciones suficientes y todo preparado súper fresco y con alta gastronomía.<br><br>La atención es fenomenal, todos los meseros super atentos, el lugar es muy bonito y está bien cuidado.', fecha: 'Hace un año' },
+                    { autor: 'Víctor Artigas Guiot', estrellas: 1, texto: 'Lugar limpio, buen ambiente; una vez que te asignan la mesa, te dan la carta y tienes que esperar algo de tiempo para hacer tu pedido, mientras tanto, ordenas un café y pan, o jugo pues esperas demasiado por tu orden, y se comprende porque el lugar está lleno.<br>Ya ha pasado cerca de media hora para que te lleven tu orden; y aquí viene lo decepcionante, se pidieron órdenes de enmoladas con pollo, y al revisarlas al estarlas comiendo, solo le ponen unas hebritas de pollo desmenuzado. Se llamó a la persona que atiende para pedirle una explicación, se las llevan para poner un poco más, explicando que ese producto "se raciona".<br>Se pidieron "huevos motuleños" los cuales los sirven sobre tostadas horneadas muy gruesas que se ocupan para tinga o pata de res y cuando se humedecen con la salsa son imposibles de cortar a cuchillo cuando lo correcto es freír las tortillas hasta dorarlas un poco.<br>Al salir del local pude observar a otro comensal lidiando con lo mismo.<br>DECEPCIÓN TOTAL.', fecha: 'Hace 4 meses' },
+                    { autor: 'Lucía F.', estrellas: 5, texto: 'Tienen un sazón muy casero. La salsa de chicharrón es increíble.', fecha: 'Hace 5 meses' },
+                    { autor: 'Mario T.', estrellas: 4, texto: 'Un clásico de Xalapa, nunca decepciona.', fecha: 'Hace 6 meses' },
+                    { autor: 'Elena R.', estrellas: 5, texto: 'Perfecto para llevar a visitas de fuera a que prueben la comida típica.', fecha: 'Hace 7 meses' },
+                    { autor: 'Hugo P.', estrellas: 3, texto: 'La comida es buena pero el lugar ya se siente un poco viejo.', fecha: 'Hace 8 meses' },
+                    { autor: 'Teresa C.', estrellas: 5, texto: 'La terraza techada es súper agradable para platicar sin ruido.', fecha: 'Hace 9 meses' },
+                    { autor: 'Luis N.', estrellas: 4, texto: 'Me gusta mucho ir los fines de semana a desayunar.', fecha: 'Hace 10 meses' },
+                    { autor: 'Carmen S.', estrellas: 5, texto: 'Muy rico todo, felicidades al chef.', fecha: 'Hace 1 año' }
+                ]
+            }
+        };
+
+        // 2. BASE DE DATOS GENERAL (Comunidad de Google Local Guides)
+        const resenasGenerales = [
+            { lugar: 'Callejón del Diamante', autor: 'Comunidad Google', estrellas: 5, texto: 'Un lugar mágico y lleno de historia. Los cafés de aquí son imperdibles si visitas Xalapa.', fecha: 'Local Guide • Hace 1 día' },
+            { lugar: 'Museo de Antropología (MAX)', autor: 'Comunidad Google', estrellas: 5, texto: 'El segundo museo de antropología más importante de México. Las cabezas colosales son impresionantes.', fecha: 'Local Guide • Hace 3 días' },
+            { lugar: 'Parque de los Berros', autor: 'Comunidad Google', estrellas: 4, texto: 'Ideal para pasear el domingo en familia y comer hot cakes o dar una vuelta en los carritos.', fecha: 'Local Guide • Hace 1 semana' },
+            { lugar: 'Barrio de Xallitic', autor: 'Comunidad Google', estrellas: 5, texto: 'Recientemente nombrado Barrio Mágico. Los lavaderos y la arquitectura te transportan en el tiempo.', fecha: 'Local Guide • Hace 1 semana' },
+            { lugar: 'La Estancia de los Tecajetes', autor: 'Comunidad Google', estrellas: 4, texto: 'Comida típica veracruzana muy rica. Pidan las picadas y el café lechero.', fecha: 'Local Guide • Hace 2 semanas' },
+            { lugar: 'Jardín Botánico Clavijero', autor: 'Comunidad Google', estrellas: 5, texto: 'Un respiro de naturaleza increíble a las afueras de la ciudad. Perfecto para fotografías.', fecha: 'Local Guide • Hace 2 semanas' },
+            { lugar: 'Catedral Metropolitana', autor: 'Comunidad Google', estrellas: 5, texto: 'Hermosa arquitectura en pleno centro. Si tienen suerte, pueden escuchar el coro.', fecha: 'Local Guide • Hace 3 semanas' },
+            { lugar: 'Parque Juárez', autor: 'Comunidad Google', estrellas: 4, texto: 'Excelente vista hacia el Pico de Orizaba en días despejados. Siempre hay eventos culturales.', fecha: 'Local Guide • Hace 1 mes' },
+            { lugar: 'Ágora de la Ciudad', autor: 'Comunidad Google', estrellas: 4, texto: 'Centro cultural con un excelente mirador, cafetería y cine independiente.', fecha: 'Local Guide • Hace 1 mes' },
+            { lugar: 'Paseo de los Lagos', autor: 'Comunidad Google', estrellas: 3, texto: 'Bonito para caminar, aunque a veces hay mucha gente los domingos.', fecha: 'Local Guide • Hace 1 mes' },
+            { lugar: 'Mercado San José', autor: 'Comunidad Google', estrellas: 5, texto: 'Aquí encuentras los mejores tamales y antojitos tradicionales a súper buen precio.', fecha: 'Local Guide • Hace 2 meses' },
+            { lugar: 'Cueva de la Orquídea', autor: 'Comunidad Google', estrellas: 4, texto: 'Una curiosidad geológica justo en medio de la ciudad. El recorrido es corto pero interesante.', fecha: 'Local Guide • Hace 2 meses' }
+        ];
+
+        // 3. VARIABLES DE CONTROL
+        let resenasFiltradas = [];
+        let indiceActual = 0;
+        let modoGeneral = false; 
+        const RESENAS_POR_PAGINA = 10;
+
+        // 4. INICIALIZAR LA PÁGINA
+        function iniciarPagina() {
+            const parametros = new URLSearchParams(window.location.search);
+            const idLugar = parametros.get('lugar');
+
+            if (idLugar && bdComunidad[idLugar]) {
+                modoGeneral = false;
+                const infoLugar = bdComunidad[idLugar];
+                document.getElementById('nombre-lugar').innerText = 'Reseñas de ' + infoLugar.nombre;
+                document.getElementById('calificacion-lugar').innerText = infoLugar.calificacion;
+                document.getElementById('estrellas-lugar').innerText = infoLugar.estrellasTxt;
+                resenasFiltradas = infoLugar.resenas;
+            } else {
+                modoGeneral = true;
+                document.getElementById('nombre-lugar').innerText = 'Recomendaciones Destacadas en Xalapa';
+                document.getElementById('calificacion-lugar').innerText = '';
+                document.getElementById('estrellas-lugar').innerText = '';
+                resenasFiltradas = resenasGenerales;
+            }
+            renderizarResenas(true);
+        }
+
+        // 5. APLICAR FILTRO DE ESTRELLAS
+        function aplicarFiltro() {
+            const parametros = new URLSearchParams(window.location.search);
+            const idLugar = parametros.get('lugar');
+            const filtro = document.getElementById('filtro-estrellas-comunidad').value;
+            
+            let baseDatos = (idLugar && bdComunidad[idLugar]) ? bdComunidad[idLugar].resenas : resenasGenerales;
+
+            if (filtro === 'todas') {
+                resenasFiltradas = baseDatos;
+            } else {
+                resenasFiltradas = baseDatos.filter(r => r.estrellas === parseInt(filtro));
+            }
+
+            renderizarResenas(true);
+        }
+
+        // 6. DIBUJAR RESEÑAS EN PANTALLA
+        function renderizarResenas(reiniciar = false) {
+            const contenedor = document.getElementById('contenedor-resenas');
+            const btnCargarMas = document.getElementById('btn-cargar-mas');
+
+            if (reiniciar) {
+                contenedor.innerHTML = '';
+                indiceActual = 0;
+            }
+
+            if (resenasFiltradas.length === 0) {
+                contenedor.innerHTML = '<p style="color: #666;">No hay reseñas con esta calificación.</p>';
+                btnCargarMas.style.display = 'none';
+                return;
+            }
+
+            const limite = Math.min(indiceActual + RESENAS_POR_PAGINA, resenasFiltradas.length);
+            
+            for (let i = indiceActual; i < limite; i++) {
+                const res = resenasFiltradas[i];
+                let estrellasTxt = '⭐'.repeat(res.estrellas);
+                
+                let tagLugar = modoGeneral ? `<span style="display: inline-block; background-color: #fef2f2; color: #d90429; padding: 4px 10px; border-radius: 12px; font-size: 12px; font-weight: bold; margin-bottom: 10px;">📍 ${res.lugar}</span>` : '';
+
+                const html = `
+                <div style="background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid #eee;">
+                    ${tagLugar}
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px;">
+                        <div>
+                            <strong style="color: #0d1b2a; font-size: 16px;">👤 ${res.autor}</strong>
+                            <span style="display: block; font-size: 12px; color: #888; margin-top: 4px;">${res.fecha}</span>
+                        </div>
+                        <span style="color: #ffb703;">${estrellasTxt}</span>
+                    </div>
+                    <p style="color: #444; line-height: 1.5; margin: 0;">"${res.texto}"</p>
+                </div>`;
+                contenedor.innerHTML += html;
+            }
+
+            indiceActual = limite;
+
+            if (indiceActual >= resenasFiltradas.length) {
+                btnCargarMas.style.display = 'none';
+            } else {
+                btnCargarMas.style.display = 'inline-block';
+            }
+        }
+
+        // 7. FUNCIÓN PARA EL BOTÓN "VER MÁS"
+        function cargarMasResenas() {
+            renderizarResenas(false);
+        }
+
+        window.onload = iniciarPagina;
+    </script>
+</body>
+</html>

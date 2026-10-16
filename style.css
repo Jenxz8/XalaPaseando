@@ -540,3 +540,44 @@ select.btn-presupuesto option {
     background-color: #0d1b2a; 
     color: white;
 }
+
+/* =========================================
+   ESTILOS DE LA VENTANA EMERGENTE (MODAL)
+   ========================================= */
+.modal-oculto {
+    display: none; /* Oculto por defecto */
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(13, 27, 42, 0.8); /* Fondo oscuro semitransparente */
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(5px);
+}
+
+.modal-contenido {
+    background-color: white;
+    width: 90%;
+    max-width: 500px;
+    border-radius: 15px;
+    padding: 30px;
+    position: relative;
+    max-height: 90vh; /* Para que no se salga de la pantalla en celulares */
+    overflow-y: auto; /* Permite hacer scroll adentro si hay muchos comentarios */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.cerrar-modal {
+    position: absolute;
+    top: 20px; right: 20px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #888;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.cerrar-modal:hover {
+    color: #d90429;
+}

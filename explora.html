@@ -10,19 +10,17 @@
 </head>
 <body class="tema-claro">
 
-    
+    <!-- BARRA DE NAVEGACIÓN -->
     <nav class="navbar">
         <div class="logo">
-            <span class="logo-text">
-                <span class="logo-x">X</span>ala<span class="logo-paseando">Paseando</span>
-            </span>
+            <span class="logo-text"><span class="logo-x">X</span>ala<span class="logo-paseando">Paseando</span></span>
             <img src="Icons/Icono_Ubi.png" alt="Logotipo" class="logo-img">
         </div>
         <ul class="nav-links">
             <li><a href="index.html">Inicio</a></li>
             <li><a href="explora.html" class="active">Explora</a></li>
             <li><a href="eventos.html">Eventos</a></li>
-            <li><a href="#">Comunidad</a></li>
+            <li><a href="comunidad.html">Comunidad</a></li>
         </ul>
         <div class="nav-icons">
            <img src="Icons/Icono_Lupa.png" alt="Buscar" class="icon-img">
@@ -30,78 +28,143 @@
         </div>
     </nav>
 
-    
     <main class="contenedor-explora">
         
         <div class="encabezado-seccion">
             <h2>Explora por categoría</h2>
         </div>
         
-        
         <section class="categorias-bar">
-            
             <div class="cat-item" onclick="cambiarCategoria('restaurantes', 'Restaurantes y Cafés', 'Disfruta de la mejor gastronomía, desde el tradicional café de altura hasta antojitos locales.')">
                 <div class="cat-icon"><img src="Icons/restaurante.png" alt="Restaurantes"></div>
                 <span>Restaurantes</span>
             </div>
-            
             <div class="cat-item" onclick="cambiarCategoria('cultura', 'Cultura y Cine', 'Descubre teatros, foros independientes y recintos culturales en la Atenas Veracruzana.')">
                 <div class="cat-icon"><img src="Icons/cine.png" alt="Cultura y cine"></div>
                 <span>Cultura y cine</span>
             </div>
-            
             <div class="cat-item" onclick="cambiarCategoria('arte', 'Galerías y Arte', 'Exposiciones de artistas locales, pintura, escultura y arte contemporáneo.')">
                 <div class="cat-icon"><img src="Icons/galeria.png" alt="Galerías y arte"></div>
                 <span>Galerías y arte</span>
             </div>
-            
-            <div class="cat-item" onclick="cambiarCategoria('naturaleza', 'Naturaleza y Parques', 'Respira aire puro en los famosos parques, jardines y senderos boscosos de la ciudad.')">
+            <div class="cat-item" onclick="cambiarCategoria('naturaleza', 'Naturaleza y Parques', 'Respira aire puro en los famosos parques y senderos boscosos de la ciudad.')">
                 <div class="cat-icon"><img src="Icons/naturaleza.png" alt="Naturaleza"></div>
                 <span>Naturaleza</span>
             </div>
         </section>
 
-        
         <div class="encabezado-seccion mt-40" style="align-items: flex-start; flex-direction: column; gap: 15px;">
             <div>
                 <h2 class="titulo-azul" id="titulo-categoria">Restaurantes y Cafés</h2>
                 <p class="subtitulo" id="desc-categoria">Disfruta de la mejor gastronomía, desde el tradicional café de altura hasta antojitos locales.</p>
             </div>
             
-            
-            <select class="btn-presupuesto" id="filtro-precio" onchange="filtrarLugares()">
-                <option value="todos">Todos los precios ⌄</option>
-                <option value="gratis">Entrada Libre / $0</option>
-                <option value="barato">Económico ($50 - $150)</option>
-                <option value="medio">Moderado ($151 - $300)</option>
-                <option value="caro">Exclusivo (Más de $300)</option>
-            </select>
+            <!-- FILTROS: PRECIO Y ESTRELLAS -->
+            <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                <select class="btn-presupuesto" id="filtro-precio" onchange="filtrarLugares()">
+                    <option value="todos">Todos los precios ⌄</option>
+                    <option value="gratis">Entrada Libre / $0</option>
+                    <option value="barato">Económico ($50 - $150)</option>
+                    <option value="medio">Moderado ($151 - $300)</option>
+                    <option value="caro">Exclusivo (Más de $300)</option>
+                </select>
+
+                <!-- FILTRO DE ESTRELLAS -->
+                <select class="btn-presupuesto" style="background-color: #ffb703; color: #0d1b2a;" id="filtro-estrellas" onchange="filtrarLugares()">
+                    <option value="todas">Calificación (Todas) ⭐</option>
+                    <option value="5">5 Estrellas ⭐⭐⭐⭐⭐</option>
+                    <option value="4">4+ Estrellas ⭐⭐⭐⭐</option>
+                    <option value="3">3+ Estrellas ⭐⭐⭐</option>
+                </select>
+            </div>
         </div>
 
-        
         <section class="grid-tarjetas" id="contenedor-lugares">
-            
+            <!-- JavaScript llenará este espacio -->
         </section>
 
     </main>
 
-    
-    
-    
+    <!-- VENTANA EMERGENTE (MODAL) PARA LOS DETALLES Y MINIMAPA -->
+    <div id="modal-lugar" class="modal-oculto">
+        <div class="modal-contenido">
+            <span class="cerrar-modal" onclick="cerrarModal()">✕</span>
+            <h2 id="modal-nombre">Nombre del Lugar</h2>
+            
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 5px;">
+                <span id="modal-estrellas" style="color: #ffb703; font-size: 20px;">⭐⭐⭐⭐⭐</span>
+                <span id="modal-calificacion" style="font-weight: 600;">5.0</span>
+            </div>
+
+            <!-- BLOQUE DEL HORARIO -->
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 15px; font-size: 15px; color: #444;">
+                <span style="font-size: 18px;">🕒</span>
+                <span id="modal-horario"></span>
+            </div>
+            
+            <!-- MINIMAPA DE GOOGLE -->
+            <div id="modal-mapa-contenedor" style="width: 100%; height: 200px; border-radius: 12px; overflow: hidden; margin-bottom: 20px;">
+                <iframe id="modal-mapa" src="" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+
+            <h3 style="margin-bottom: 15px;">Reseñas recientes</h3>
+            <div id="modal-resenas-lista" style="display: flex; flex-direction: column; gap: 15px; margin-bottom: 20px;">
+                <!-- Aquí se inyectan las reseñas -->
+            </div>
+
+            <!-- BOTÓN QUE LLEVARÁ A COMUNIDAD.HTML -->
+            <button class="btn-asistir" id="btn-ir-comunidad" style="text-align: center; width: 100%;">Ver todas las reseñas en Comunidad</button>
+        </div>
+    </div>
+
+    <!-- SCRIPT DE JAVASCRIPT -->
     <script>
-
         const lugares = [
-
-            { categoria: 'restaurantes', nombre: 'Lulú Café', desc: 'Un espacio estético y tranquilo para probar métodos de extracción de café.', tag: 'Cafetería', color: 'roja', ubi: 'Zona Centro', precioTxt: '$100 - $150', nivelPrecio: 'barato', img: 'https://images.unsplash.com/photo-1554118811-1e0d58224f24' },
-            { categoria: 'restaurantes', nombre: 'La Estancia de los Tecajetes', desc: 'Antojitos xalapeños y buffet con una vista hermosa rodeada de naturaleza.', tag: 'Tradicional', color: 'azul', ubi: 'Ávila Camacho', precioTxt: '$250 - $300', nivelPrecio: 'medio', img: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4' },
-            { categoria: 'restaurantes', nombre: 'Asadero Cien', desc: 'El lugar por excelencia para cortes finos de carne y un servicio de primera.', tag: 'Cortes', color: 'oscura', ubi: 'Maestros Veracruzanos', precioTxt: '$350 - $600', nivelPrecio: 'caro', img: 'https://images.unsplash.com/photo-1544148103-0773bf10d330' },
-
-            { categoria: 'cultura', nombre: 'Teatro J.J. Herrera', desc: 'Foro histórico que presenta obras de teatro independientes y proyecciones de cine de arte.', tag: 'Teatro', color: 'roja', ubi: 'Calle Miguel Palacios', precioTxt: 'Entrada Libre', nivelPrecio: 'gratis', img: 'https://images.unsplash.com/photo-1507676184212-d0330a15233c' },
-
-            { categoria: 'arte', nombre: 'Galería de Arte Contemporáneo', desc: 'Exposiciones de artistas nacionales e internacionales en una casona colonial remodelada.', tag: 'Exposición', color: 'azul', ubi: 'Xalapeños Ilustres', precioTxt: 'Entrada Libre', nivelPrecio: 'gratis', img: 'https://images.unsplash.com/photo-1518998053401-a4149019841c' },
-
-            { categoria: 'naturaleza', nombre: 'Parque Ecológico Macuiltépetl', desc: 'El cerro emblemático de la ciudad. Ideal para hacer senderismo, correr o un picnic.', tag: 'Parque', color: 'oscura', ubi: 'Volcán Macuiltépetl', precioTxt: 'Entrada Libre', nivelPrecio: 'gratis', img: 'https://images.unsplash.com/photo-1572085313466-6710de8d7ba3' },
-            { categoria: 'naturaleza', nombre: 'Jardín Botánico Clavijero', desc: 'Una de las colecciones de plantas más importantes del país, con senderos boscosos.', tag: 'Naturaleza', color: 'roja', ubi: 'Carretera Antigua a Coatepec', precioTxt: '$50', nivelPrecio: 'barato', img: 'https://images.unsplash.com/photo-1588628566587-bf6ac7ad770c' }
+            // LULÚ CAFÉ 
+            { 
+                id: 'lulu-cafe',
+                categoria: 'restaurantes', 
+                nombre: 'Lulú Café', 
+                desc: 'Un espacio estético y tranquilo para probar métodos de extracción de café.', 
+                tag: 'Cafetería', color: 'roja', ubi: 'Zona Centro', precioTxt: '$100 - $150', nivelPrecio: 'barato', 
+                img: 'Fonts/lulucafe1.jpg', 
+                calificacion: 4.5,
+                estrellasNum: 4,
+                horario: '<span style="color: #d90429; font-weight: 600;">Cerrado</span> · Abre a las 9 a.m. del vie',
+                mapaUrl: 'https://www.google.com/maps?q=Lulú+Café,+Xalapa,+Veracruz&output=embed',
+                resenas: [
+                    { autor: 'Aime Grisel Ramos', estrellas: '⭐⭐⭐⭐', texto: 'El café es delicioso.<br>El emparedado de pollo al pesto es rico.<br>La cafetería ofrece opciones únicas en su menú de alimentos, pero podría ser un poco más sencillo para algunos.<br>En cuanto al costo, puede ser alto para algunos.<br>El ambiente es tranquilo. El local también cuenta con sus reglas de funcionamiento.<br>El café lo vale.' },
+                    { autor: 'Karenka Nátoly', estrellas: '⭐⭐⭐', texto: 'La verdad me recomendaron venir a esta cafetería pero sinceramente me arrepiento, el servicio está ok, pero como solo era yo no puedo decir que tanto tardan cuando hay gente, me sorprende que las promociones son muy pequeñas para el precio, pedí un pastel de chocolate y un frappé, al pastel le agregaron un crema que sabía mucho a refrigerada, el frappé no tenían ni un chiste, solo era el hielo molido con el café, si quería crema batida eran otros 15 pesos (?) sinceramente no recomiendo para nada, no tienen variedad de postres siendo una cafetería que normalmente son los fuertes, el precio por las porciones deja mucho que desear, realmente me arrepiento de haber perdido mi dinero en algo que ni disfruté.' },
+                    { autor: 'Anel Morales', estrellas: '⭐⭐⭐⭐⭐', texto: 'Verdaderamente el café es delicioso, y la comida lo es mejor, me pedí un Lulú Madame (platillo de la casa), la salsa bechamel con que lo bañan, realmente es una delicia. Por otro lado, de tomar pedí la especialidad de temporada, una bebida de nombre "Valentín", expreso preparado con cremas y frutos rojos. De verdad que el ambiente es de lo más agradable y atento.' },
+                    { autor: 'Christian Camacho', estrellas: '⭐⭐⭐⭐⭐', texto: 'Me encantó Lulú Café, es tan tranquilo y acogedor. Pedí chilaquiles con salsa de frijol con pollo y un chai latte de té negro. Ambos estuvieron deliciosos. La porción de los chilaquiles fue suficiente,el chai estaba bien equilibrado y se sentía natural, se nota la presencia de las distintas especias. Toda la carta me pareció bastante asequible.' },
+                    { autor: 'paulina rojano', estrellas: '⭐⭐⭐⭐⭐', texto: 'Ame con toda el alma el baguette de serrano! Es muy bueno los sabores se combinan perfecto. La música es relajante pero buena, la bebida que pedí tambien estaba perfecta. Vale la pena cada peso gastado.' },
+                    { autor: 'Surimi', estrellas: '⭐⭐⭐⭐⭐', texto: 'Quedé muy satisfecha respecto al servicio y la calidad de los productos. Me llevó una buena experiencia con la amabilidad y disposición del barista. :)' }
+                ]
+            },
+            
+            // OTROS LUGARES
+            // LA ESTANCIA DE LOS TECAJETES 
+            { 
+                id: 'tecajetes', 
+                categoria: 'restaurantes', 
+                nombre: 'La Estancia de los Tecajetes', 
+                desc: 'Comida regional con una hermosa vista al parque. Especialistas en antojitos, chiles en nogada y café lechero.', 
+                tag: 'Tradicional', color: 'azul', ubi: 'Ávila Camacho', precioTxt: '$200 - $300', nivelPrecio: 'medio', 
+               img: 'Fonts/estanciateca1.jpg', 
+                calificacion: 4.4,
+                estrellasNum: 4, 
+                horario: '<span style="color: #d90429; font-weight: 600;">Cerrado</span> · Abre a las 7:00 a.m.',
+                mapaUrl: 'https://www.google.com/maps?q=La+Estancia+de+los+Tecajetes,+Xalapa,+Veracruz&output=embed', 
+                resenas: [
+                    { autor: 'Sac Hergali', estrellas: '⭐⭐⭐', texto: 'Vine de visita a Xalapa y me recomendaron este lugar por ser un clásico xalapeño y por lo que pude ver, seguramente lo es por lo bonito del lugar.<br><br>Nuestros platillos estuvieron insípidos. La porción de los huevos con enfrijoladas es muy pequeña, los chilaquiles de la casa todo lo contrario, aunque la salsa estaba sin condimentar. El café no estaba tan mal, tenía buen sabor, aunque para la zona que tengo entendido es muy cafetera pues... no destacaba tanto.<br><br>El servicio fue muy bueno. El chico que nos atendió fue muy amable y atento. El lugar es agradable y cómodo.' },
+                    { autor: 'Danny T', estrellas: '⭐⭐⭐⭐⭐', texto: 'Beautiful setting within the trees. Great service and food. The prices were also reasonable. You can go to a walk next door once you’re done. I ordered the papaya with yougurt and the omelette Niebla.' },
+                    { autor: 'Victor Garcia Kassab', estrellas: '⭐⭐⭐⭐⭐', texto: 'Muy recomendable.<br><br>De mis lugares favoritos para desayunar. Un lugar cercano al centro de la ciudad, por la colindancia al parque los Tecajetes, te desconectas de la urbe.<br><br>El sabor de la comida es deliciosa, mi favorito para el desayuno “Ropa vieja ”.<br><br>En domingo el lugar es concurrido, música en vivo. Aunque el estacionamiento es reducido cuenta con valet parking.' },
+                    { autor: 'Gonzalo T', estrellas: '⭐⭐⭐⭐⭐', texto: 'Es una gran experiencia, sobre todo después de caminar por el parque.<br><br>Toda la comida está súper rica, nos recibieron con una salsa que hicieron en molcajete al momento, estaba deliciosa. Las tortillas hechas a mano son fantásticas, la salsa de chile seco y de habanero también muy ricas.<br><br>Los platillos son bien servidos, porciones suficientes y todo preparado súper fresco y con alta gastronomía.<br><br>La atención es fenomenal, todos los meseros super atentos, el lugar es muy bonito y está bien cuidado.' },
+                    { autor: 'Víctor Artigas Guiot', estrellas: '⭐', texto: 'Lugar limpio, buen ambiente; una vez que te asignan la mesa, te dan la carta y tienes que esperar algo de tiempo para hacer tu pedido, mientras tanto, ordenas un café y pan, o jugo pues esperas demasiado por tu orden, y se comprende porque el lugar está lleno.<br>Ya ha pasado cerca de media hora para que te lleven tu orden; y aquí viene lo decepcionante, se pidieron órdenes de enmoladas con pollo, y al revisarlas al estarlas comiendo, solo le ponen unas hebritas de pollo desmenuzado. Se llamó a la persona que atiende para pedirle una explicación, se las llevan para poner un poco más, explicando que ese producto "se raciona".<br>Se pidieron "huevos motuleños" los cuales los sirven sobre tostadas horneadas muy gruesas que se ocupan para tinga o pata de res y cuando se humedecen con la salsa son imposibles de cortar a cuchillo cuando lo correcto es freír las tortillas hasta dorarlas un poco.<br>Al salir del local pude observar a otro comensal lidiando con lo mismo.<br>DECEPCIÓN TOTAL.' }
+                ] 
+            },
+            { id: 'asadero', categoria: 'restaurantes', nombre: 'Asadero Cien', desc: 'El lugar por excelencia para cortes finos.', tag: 'Cortes', color: 'oscura', ubi: 'Maestros Ver.', precioTxt: '$350 - $600', nivelPrecio: 'caro', img: 'https://images.unsplash.com/photo-1544148103-0773bf10d330', calificacion: 4.7, estrellasNum: 5, horario: 'Horario no disponible', mapaUrl: '', resenas: [] },
+            { id: 'teatro', categoria: 'cultura', nombre: 'Teatro J.J. Herrera', desc: 'Foro histórico para obras independientes.', tag: 'Teatro', color: 'roja', ubi: 'Centro', precioTxt: 'Libre', nivelPrecio: 'gratis', img: 'https://images.unsplash.com/photo-1507676184212-d0330a15233c', calificacion: 4.2, estrellasNum: 4, horario: 'Abierto según función', mapaUrl: '', resenas: [] }
         ];
 
         let categoriaActual = 'restaurantes';
@@ -110,49 +173,94 @@
             categoriaActual = nuevaCategoria;
             document.getElementById('titulo-categoria').innerText = titulo;
             document.getElementById('desc-categoria').innerText = descripcion;
-
             document.getElementById('filtro-precio').value = 'todos'; 
-            
+            document.getElementById('filtro-estrellas').value = 'todas'; 
             filtrarLugares();
         }
 
         function filtrarLugares() {
             const contenedor = document.getElementById('contenedor-lugares');
             const filtroPrecio = document.getElementById('filtro-precio').value;
-
+            const filtroEstrellas = document.getElementById('filtro-estrellas').value;
+            
             contenedor.innerHTML = '';
 
             const lugaresFiltrados = lugares.filter(lugar => {
-
                 if (lugar.categoria !== categoriaActual) return false;
-
-                if (filtroPrecio === 'todos') return true;
-                if (lugar.nivelPrecio === filtroPrecio) return true;
-                return false;
+                if (filtroPrecio !== 'todos' && lugar.nivelPrecio !== filtroPrecio) return false;
+                if (filtroEstrellas !== 'todas' && lugar.estrellasNum < parseInt(filtroEstrellas)) return false;
+                return true;
             });
 
             if(lugaresFiltrados.length === 0) {
-                contenedor.innerHTML = '<p style="color: #666; font-size: 16px; margin-top: 20px;">No hay lugares registrados con este presupuesto en esta categoría.</p>';
+                contenedor.innerHTML = '<p style="color: #666; font-size: 16px;">No hay lugares con estos filtros.</p>';
                 return;
             }
 
             lugaresFiltrados.forEach(lugar => {
                 const htmlTarjeta = `
-                <div class="tarjeta">
+                <div class="tarjeta" style="cursor: pointer;" onclick="abrirModal('${lugar.id}')">
                     <img src="${lugar.img}?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" alt="${lugar.nombre}">
                     <div class="tarjeta-cuerpo">
                         <span class="etiqueta ${lugar.color}">${lugar.tag}</span>
-                        <h3>${lugar.nombre}</h3>
-                        <p>${lugar.desc}</p>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
+                            <h3 style="margin:0;">${lugar.nombre}</h3>
+                            <span style="color: #ffb703; font-weight: bold; font-size: 14px;">⭐ ${lugar.calificacion}</span>
+                        </div>
+                        <p style="margin-top: 5px;">${lugar.desc}</p>
                         <div class="tarjeta-pie mt-10">
                             <span>📍 ${lugar.ubi}</span>
                             <span> ${lugar.precioTxt}</span>
                         </div>
                     </div>
                 </div>`;
-
                 contenedor.innerHTML += htmlTarjeta;
             });
+        }
+
+        function abrirModal(idLugar) {
+            const lugar = lugares.find(l => l.id === idLugar);
+            if(!lugar) return;
+
+            document.getElementById('modal-nombre').innerText = lugar.nombre;
+            document.getElementById('modal-calificacion').innerText = lugar.calificacion;
+            document.getElementById('modal-mapa').src = lugar.mapaUrl || ''; 
+            
+            // Inyectar el horario
+            document.getElementById('modal-horario').innerHTML = lugar.horario || 'Horario no disponible';
+            
+            let estrellasHTML = '';
+            for(let i=0; i<lugar.estrellasNum; i++) estrellasHTML += '⭐';
+            document.getElementById('modal-estrellas').innerText = estrellasHTML;
+
+            const contenedorResenas = document.getElementById('modal-resenas-lista');
+            contenedorResenas.innerHTML = '';
+            
+            if(lugar.resenas.length > 0) {
+                lugar.resenas.forEach(res => {
+                    contenedorResenas.innerHTML += `
+                    <div style="background: #f8f9fa; padding: 12px; border-radius: 8px; border: 1px solid #eee;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                            <strong>👤 ${res.autor}</strong>
+                            <span style="font-size: 12px;">${res.estrellas}</span>
+                        </div>
+                        <p style="font-size: 13px; margin:0; color: #555;">"${res.texto}"</p>
+                    </div>`;
+                });
+            } else {
+                contenedorResenas.innerHTML = '<p style="font-size: 13px; color: #888;">No hay reseñas disponibles aún.</p>';
+            }
+
+            document.getElementById('btn-ir-comunidad').onclick = function() {
+                window.location.href = `comunidad.html?lugar=${lugar.id}`;
+            };
+
+            document.getElementById('modal-lugar').style.display = 'flex';
+        }
+
+        function cerrarModal() {
+            document.getElementById('modal-lugar').style.display = 'none';
+            document.getElementById('modal-mapa').src = ''; 
         }
 
         window.onload = () => filtrarLugares();
