@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
 </head>
+<script src="navegacion.js"></script>
 <body class="tema-claro">
 
     <!-- BARRA DE NAVEGACIÓN -->
@@ -128,9 +129,9 @@
                 desc: 'Un espacio estético y tranquilo para probar métodos de extracción de café.', 
                 tag: 'Cafetería', color: 'roja', ubi: 'Zona Centro', precioTxt: '$100 - $150', nivelPrecio: 'barato', 
                 img: 'Fonts/lulucafe1.jpg', 
-                calificacion: 4.5,
+                calificacion: 4.6,
                 estrellasNum: 4,
-                horario: '<span style="color: #d90429; font-weight: 600;">Cerrado</span> · Abre a las 9 a.m. del vie',
+                horarioSemanal: { apertura: '09:00', cierre: '21:00', dias: [0, 1, 2, 3, 4, 5, 6] },
                 mapaUrl: 'https://www.google.com/maps?q=Lulú+Café,+Xalapa,+Veracruz&output=embed',
                 resenas: [
                     { autor: 'Aime Grisel Ramos', estrellas: '⭐⭐⭐⭐', texto: 'El café es delicioso.<br>El emparedado de pollo al pesto es rico.<br>La cafetería ofrece opciones únicas en su menú de alimentos, pero podría ser un poco más sencillo para algunos.<br>En cuanto al costo, puede ser alto para algunos.<br>El ambiente es tranquilo. El local también cuenta con sus reglas de funcionamiento.<br>El café lo vale.' },
@@ -168,6 +169,55 @@
         ];
 
         let categoriaActual = 'restaurantes';
+        let lugarModalActual = null;
+        let intervaloHorario = null;
+
+        function obtenerHoraXalapa() {
+            const partes = new Intl.DateTimeFormat('en-US', {
+                timeZone: 'America/Mexico_City',
+                weekday: 'short', hour: '2-digit', minute: '2-digit',
+                hourCycle: 'h23'
+            }).formatToParts(new Date());
+            const dato = tipo => partes.find(parte => parte.type === tipo).value;
+            const dias = { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 };
+            return {
+                dia: dias[dato('weekday')],
+                minutos: Number(dato('hour')) * 60 + Number(dato('minute'))
+            };
+        }
+
+        function convertirMinutos(hora) {
+            const [h, m] = hora.split(':').map(Number);
+            return h * 60 + m;
+        }
+
+        function formatearHora(hora) {
+            const [h, m] = hora.split(':').map(Number);
+            return `${h % 12 || 12}:${String(m).padStart(2, '0')} ${h < 12 ? 'a. m.' : 'p. m.'}`;
+        }
+
+        function actualizarHorarioModal() {
+            if (!lugarModalActual) return;
+            const elemento = document.getElementById('modal-horario');
+            const horario = lugarModalActual.horarioSemanal;
+            if (!horario) {
+                elemento.textContent = lugarModalActual.horario || 'Horario no disponible';
+                return;
+            }
+            const ahora = obtenerHoraXalapa();
+            const apertura = convertirMinutos(horario.apertura);
+            const cierre = convertirMinutos(horario.cierre);
+            const operaHoy = horario.dias.includes(ahora.dia);
+            const abierto = operaHoy && ahora.minutos >= apertura && ahora.minutos < cierre;
+            const estado = document.createElement('strong');
+            estado.textContent = abierto ? 'Abierto' : 'Cerrado';
+            estado.style.color = abierto ? '#16803c' : '#d90429';
+            elemento.replaceChildren(estado, document.createTextNode(
+                abierto ? ` · Cierra a las ${formatearHora(horario.cierre)}`
+                        : ` · Abre a las ${formatearHora(horario.apertura)}`
+            ));
+        }
+
 
         function cambiarCategoria(nuevaCategoria, titulo, descripcion) {
             categoriaActual = nuevaCategoria;
@@ -221,13 +271,16 @@
         function abrirModal(idLugar) {
             const lugar = lugares.find(l => l.id === idLugar);
             if(!lugar) return;
+            lugarModalActual = lugar;
+            clearInterval(intervaloHorario);
 
             document.getElementById('modal-nombre').innerText = lugar.nombre;
             document.getElementById('modal-calificacion').innerText = lugar.calificacion;
             document.getElementById('modal-mapa').src = lugar.mapaUrl || ''; 
             
             // Inyectar el horario
-            document.getElementById('modal-horario').innerHTML = lugar.horario || 'Horario no disponible';
+            actualizarHorarioModal();
+            intervaloHorario = setInterval(actualizarHorarioModal, 15000);
             
             let estrellasHTML = '';
             for(let i=0; i<lugar.estrellasNum; i++) estrellasHTML += '⭐';
@@ -259,11 +312,68 @@
         }
 
         function cerrarModal() {
+            clearInterval(intervaloHorario);
+            intervaloHorario = null;
+            lugarModalActual = null;
             document.getElementById('modal-lugar').style.display = 'none';
             document.getElementById('modal-mapa').src = ''; 
         }
 
-        window.onload = () => filtrarLugares();
+        window.onload = () => {
+
+    // Mostrar los lugares de la categoría inicial
+    filtrarLugares();
+
+    // Leer si el buscador envió un lugar específico
+    const parametros = new URLSearchParams(
+        window.location.search
+    );
+
+    const idLugar = parametros.get('lugar');
+
+    if (idLugar) {
+
+        const lugar = lugares.find(
+            item => item.id === idLugar
+        );
+
+        if (lugar) {
+
+            // Cambiar a la categoría correspondiente
+            const categorias = {
+                restaurantes: {
+                    titulo: 'Restaurantes y Cafés',
+                    descripcion: 'Descubre la gastronomía de Xalapa.'
+                },
+                cultura: {
+                    titulo: 'Cultura y Cine',
+                    descripcion: 'Descubre los espacios culturales de Xalapa.'
+                },
+                arte: {
+                    titulo: 'Galerías y Arte',
+                    descripcion: 'Descubre el arte de Xalapa.'
+                },
+                naturaleza: {
+                    titulo: 'Naturaleza y Parques',
+                    descripcion: 'Explora los espacios naturales de Xalapa.'
+                }
+            };
+
+            const categoria = categorias[lugar.categoria];
+
+            if (categoria) {
+                cambiarCategoria(
+                    lugar.categoria,
+                    categoria.titulo,
+                    categoria.descripcion
+                );
+            }
+
+            // Abrir automáticamente el restaurante o lugar
+            abrirModal(idLugar);
+        }
+    }
+};
     </script>
 </body>
 </html>

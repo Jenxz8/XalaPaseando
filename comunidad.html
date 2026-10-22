@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
 </head>
+<script src="navegacion.js"></script>
 <body class="tema-claro">
 
     <!-- BARRA DE NAVEGACIÓN -->
@@ -36,6 +37,93 @@
             <p style="margin-bottom: 20px; font-size: 15px;">Comparte tus mejores fotos de Xalapa, descubre nuevos rincones y entérate de las últimas novedades.</p>
             <a href="" target="_blank" style="background: white; color: #dc2743; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; font-size: 14px; display: inline-block; transition: 0.3s;">Síguenos en Instagram</a>
         </div>
+        <!-- INICIO DE COMUNIDAD -->
+<section id="inicio-comunidad" class="inicio-comunidad">
+
+    <h2>Descubre nuestra comunidad</h2>
+    <p>
+        Explora las experiencias y recomendaciones
+        de los lugares más interesantes de Xalapa.
+    </p>
+
+    <!-- BUSCADOR -->
+    <div class="buscador-comunidad">
+        <input
+            type="search"
+            id="buscar-comunidad"
+            placeholder="Buscar restaurantes, parques y lugares..."
+            oninput="buscarEnComunidad()"
+        >
+
+        <div id="resultados-busqueda"></div>
+    </div>
+
+    <!-- LUGARES DESTACADOS -->
+    <h3 class="subtitulo-comunidad">Lugares destacados</h3>
+
+    <div class="destacados-comunidad">
+
+        <a href="comunidad.html?lugar=lulu-cafe"
+           class="tarjeta-destacada">
+
+            <img src="Fonts/lulucafe1.jpg" alt="Lulú Café">
+
+            <div class="info-destacada">
+                <h4>Lulú Café</h4>
+                <p>★ 4.6 · Cafetería</p>
+                <span>Ver reseñas →</span>
+            </div>
+
+        </a>
+
+        <a href="comunidad.html?lugar=tecajetes"
+           class="tarjeta-destacada">
+
+            <img src="Fonts/estanciateca1.jpg"
+                 alt="La Estancia de los Tecajetes">
+
+            <div class="info-destacada">
+                <h4>La Estancia de los Tecajetes</h4>
+                <p>★ 4.4 · Restaurante</p>
+                <span>Ver reseñas →</span>
+            </div>
+
+        </a>
+
+    </div>
+
+    <!-- FILTROS DE CATEGORÍA -->
+    <h3 class="subtitulo-comunidad">Explorar experiencias</h3>
+
+    <div class="filtros-comunidad">
+
+        <button class="filtro-comunidad activo"
+                data-categoria="todos"
+                onclick="filtrarCategoria('todos')">
+            Todos
+        </button>
+
+        <button class="filtro-comunidad"
+                data-categoria="restaurantes"
+                onclick="filtrarCategoria('restaurantes')">
+            Restaurantes
+        </button>
+
+        <button class="filtro-comunidad"
+                data-categoria="cultura"
+                onclick="filtrarCategoria('cultura')">
+            Cultura
+        </button>
+
+        <button class="filtro-comunidad"
+                data-categoria="naturaleza"
+                onclick="filtrarCategoria('naturaleza')">
+            Naturaleza
+        </button>
+
+    </div>
+
+</section>
 
         <!-- ENCABEZADO Y FILTRO -->
         <div class="encabezado-seccion mt-40" style="align-items: flex-start; flex-direction: column; gap: 15px;">
@@ -77,7 +165,7 @@
         const bdComunidad = {
             'lulu-cafe': {
                 nombre: 'Lulú Café',
-                calificacion: '4.5',
+                calificacion: '4.6',
                 estrellasTxt: '⭐⭐⭐⭐',
                 resenas: [
                     { autor: 'Aime Grisel Ramos', estrellas: 4, texto: 'El café es delicioso.<br>El emparedado de pollo al pesto es rico.<br>La cafetería ofrece opciones únicas en su menú de alimentos, pero podría ser un poco más sencillo para algunos.<br>En cuanto al costo, puede ser alto para algunos.<br>El ambiente es tranquilo. El local también cuenta con sus reglas de funcionamiento.<br>El café lo vale.', fecha: 'Hace 8 meses' },
@@ -157,25 +245,89 @@
                 document.getElementById('estrellas-lugar').innerText = '';
                 resenasFiltradas = resenasGenerales;
             }
-            renderizarResenas(true);
+            const inicioComunidad = document.getElementById(
+    'inicio-comunidad'
+);
+
+if (modoGeneral) {
+    inicioComunidad.style.display = 'block';
+} else {
+    inicioComunidad.style.display = 'none';
+}
+
+aplicarFiltro();
         }
 
         // 5. APLICAR FILTRO DE ESTRELLAS
         function aplicarFiltro() {
-            const parametros = new URLSearchParams(window.location.search);
-            const idLugar = parametros.get('lugar');
-            const filtro = document.getElementById('filtro-estrellas-comunidad').value;
-            
-            let baseDatos = (idLugar && bdComunidad[idLugar]) ? bdComunidad[idLugar].resenas : resenasGenerales;
 
-            if (filtro === 'todas') {
-                resenasFiltradas = baseDatos;
-            } else {
-                resenasFiltradas = baseDatos.filter(r => r.estrellas === parseInt(filtro));
+    const parametros = new URLSearchParams(
+        window.location.search
+    );
+
+    const idLugar = parametros.get('lugar');
+
+    const filtroEstrellas = document.getElementById(
+        'filtro-estrellas-comunidad'
+    ).value;
+
+    const buscador = document.getElementById(
+        'buscar-comunidad'
+    );
+
+    const textoBusqueda = buscador
+        ? buscador.value.toLocaleLowerCase('es').trim()
+        : '';
+
+    const esLugarEspecifico =
+        idLugar && bdComunidad[idLugar];
+
+    let baseDatos = esLugarEspecifico
+        ? bdComunidad[idLugar].resenas
+        : resenasGenerales;
+
+    resenasFiltradas = baseDatos.filter(resena => {
+
+        // Filtrar por estrellas
+        if (
+            filtroEstrellas !== 'todas' &&
+            resena.estrellas !== Number(filtroEstrellas)
+        ) {
+            return false;
+        }
+
+        // Filtros adicionales solo en la comunidad general
+        if (!esLugarEspecifico) {
+
+            const categoria =
+                categoriasComunidad[resena.lugar] || 'otros';
+
+            if (
+                categoriaComunidadActual !== 'todos' &&
+                categoria !== categoriaComunidadActual
+            ) {
+                return false;
             }
 
-            renderizarResenas(true);
+            const contenido = [
+                resena.lugar,
+                resena.autor,
+                resena.texto
+            ].join(' ').toLocaleLowerCase('es');
+
+            if (
+                textoBusqueda &&
+                !contenido.includes(textoBusqueda)
+            ) {
+                return false;
+            }
         }
+
+        return true;
+    });
+
+    renderizarResenas(true);
+}
 
         // 6. DIBUJAR RESEÑAS EN PANTALLA
         function renderizarResenas(reiniciar = false) {
@@ -229,7 +381,84 @@
         function cargarMasResenas() {
             renderizarResenas(false);
         }
+// CATEGORÍAS DE LOS LUGARES
 
+const categoriasComunidad = {
+    'Callejón del Diamante': 'cultura',
+    'Museo de Antropología (MAX)': 'cultura',
+    'Parque de los Berros': 'naturaleza',
+    'Barrio de Xallitic': 'cultura',
+    'La Estancia de los Tecajetes': 'restaurantes',
+    'Jardín Botánico Clavijero': 'naturaleza',
+    'Catedral Metropolitana': 'cultura',
+    'Parque Juárez': 'naturaleza',
+    'Ágora de la Ciudad': 'cultura',
+    'Paseo de los Lagos': 'naturaleza',
+    'Mercado San José': 'restaurantes',
+    'Cueva de la Orquídea': 'naturaleza'
+};
+
+let categoriaComunidadActual = 'todos';
+
+// BUSCAR LUGARES
+
+function buscarEnComunidad() {
+
+    const texto = document.getElementById(
+        'buscar-comunidad'
+    ).value.toLocaleLowerCase('es').trim();
+
+    const resultados = document.getElementById(
+        'resultados-busqueda'
+    );
+
+    resultados.innerHTML = '';
+
+    if (!texto) {
+        aplicarFiltro();
+        return;
+    }
+
+    // Buscar establecimientos con página de reseñas
+    Object.entries(bdComunidad).forEach(([id, lugar]) => {
+
+        if (lugar.nombre.toLocaleLowerCase('es').includes(texto)) {
+
+            const enlace = document.createElement('a');
+
+            enlace.className = 'resultado-lugar';
+            enlace.href = 'comunidad.html?lugar=' +
+                encodeURIComponent(id);
+
+            enlace.textContent = lugar.nombre + ' → Ver reseñas';
+
+            resultados.appendChild(enlace);
+        }
+    });
+
+    // Buscar lugares de las reseñas generales
+    aplicarFiltro();
+}
+
+
+// FILTRAR POR CATEGORÍA
+
+function filtrarCategoria(categoria) {
+
+    categoriaComunidadActual = categoria;
+
+    document.querySelectorAll(
+        '.filtro-comunidad'
+    ).forEach(boton => {
+
+        boton.classList.toggle(
+            'activo',
+            boton.dataset.categoria === categoria
+        );
+    });
+
+    aplicarFiltro();
+}
         window.onload = iniciarPagina;
     </script>
 </body>
