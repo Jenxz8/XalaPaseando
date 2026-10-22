@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  
+  <!-- Página de Inicio -->
+  <url>
+    <loc>https://xalapaseando.lat/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- Sección Explora -->
+  <url>
+    <loc>https://xalapaseando.lat/explora.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Sección Restaurantes -->
+  <url>
+    <loc>https://xalapaseando.lat/restaurantes.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Sección Eventos -->
+  <url>
+    <loc>https://xalapaseando.lat/eventos.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Detalle de Eventos -->
+  <url>
+    <loc>https://xalapaseando.lat/evento-detalle.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <!-- Comunidad -->
+  <url>
+    <loc>https://xalapaseando.lat/comunidad.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+</urlset>
