@@ -1,4 +1,3 @@
-
 @font-face {
     font-family: 'LT Gutbust';
     
@@ -541,15 +540,15 @@ select.btn-presupuesto option {
     color: white;
 }
 
-/* =========================================
-   ESTILOS DE LA VENTANA EMERGENTE (MODAL)
-   ========================================= */
+ 
+
+
 .modal-oculto {
-    display: none; /* Oculto por defecto */
+    display: none;  
     position: fixed;
     top: 0; left: 0;
     width: 100%; height: 100%;
-    background-color: rgba(13, 27, 42, 0.8); /* Fondo oscuro semitransparente */
+    background-color: rgba(13, 27, 42, 0.8);  
     z-index: 1000;
     justify-content: center;
     align-items: center;
@@ -563,8 +562,8 @@ select.btn-presupuesto option {
     border-radius: 15px;
     padding: 30px;
     position: relative;
-    max-height: 90vh; /* Para que no se salga de la pantalla en celulares */
-    overflow-y: auto; /* Permite hacer scroll adentro si hay muchos comentarios */
+    max-height: 90vh;  
+    overflow-y: auto;  
     box-shadow: 0 10px 30px rgba(0,0,0,0.2);
 }
 
@@ -582,7 +581,7 @@ select.btn-presupuesto option {
     color: #d90429;
 }
 
-/* COMUNIDAD */
+ 
 
 .inicio-comunidad {
     margin-top: 40px;
@@ -600,7 +599,7 @@ select.btn-presupuesto option {
     line-height: 1.6;
 }
 
-/* BUSCADOR */
+ 
 
 .buscador-comunidad {
     position: relative;
@@ -622,7 +621,7 @@ select.btn-presupuesto option {
     border-color: #d90429;
 }
 
-/* RESULTADOS DEL BUSCADOR */
+ 
 
 #resultados-busqueda {
     position: absolute;
@@ -649,7 +648,7 @@ select.btn-presupuesto option {
     color: #d90429;
 }
 
-/* LUGARES DESTACADOS */
+ 
 
 .subtitulo-comunidad {
     color: #0d1b2a;
@@ -705,7 +704,7 @@ select.btn-presupuesto option {
     font-size: 13px;
 }
 
-/* FILTROS */
+ 
 
 .filtros-comunidad {
     display: flex;
@@ -732,7 +731,7 @@ select.btn-presupuesto option {
     border-color: #d90429;
 }
 
-/* CELULARES */
+ 
 
 @media (max-width: 600px) {
     .destacados-comunidad {
@@ -750,11 +749,11 @@ select.btn-presupuesto option {
 }
 
 
-/* ========================================
-   NAVEGACIÓN INTERACTIVA - XALAPASEANDO
-   ======================================== */
+ 
 
-/* LOGOTIPO INTERACTIVO */
+
+
+ 
 
 .navbar .logo {
     cursor: pointer;
@@ -766,7 +765,7 @@ select.btn-presupuesto option {
     border-radius: 4px;
 }
 
-/* ICONOS INTERACTIVOS */
+ 
 
 .navbar .nav-icons {
     display: flex;
@@ -782,7 +781,7 @@ select.btn-presupuesto option {
 }
 
 .navbar .nav-icons .icon:hover {
-    color: #d90429 !important;
+    color: #d90429  ;
 }
 
 .navbar .nav-icons .icon-img:focus-visible,
@@ -791,7 +790,7 @@ select.btn-presupuesto option {
     outline-offset: 5px;
 }
 
-/* BUSCADOR EN LA BARRA */
+ 
 
 .nav-buscador {
     display: none;
@@ -802,7 +801,7 @@ select.btn-presupuesto option {
 }
 
 .navbar.nav-buscando .nav-links {
-    display: none !important;
+    display: none  ;
 }
 
 .navbar.nav-buscando .nav-buscador {
@@ -826,7 +825,7 @@ select.btn-presupuesto option {
     box-shadow: 0 0 0 3px rgba(217, 4, 41, 0.2);
 }
 
-/* RESULTADOS DEL BUSCADOR */
+ 
 
 .nav-sugerencias {
     display: none;
@@ -879,7 +878,7 @@ select.btn-presupuesto option {
     font-size: 13px;
 }
 
-/* MENÚ VERTICAL DESPLEGABLE */
+ 
 
 .nav-menu-vertical {
     display: none;
@@ -919,12 +918,12 @@ select.btn-presupuesto option {
     border-left: 3px solid #ff3b30;
 }
 
-/* PANTALLAS PEQUEÑAS */
+ 
 
 @media (max-width: 768px) {
 
-    /* La navegación horizontal sigue oculta,
-       pero la lupa y el menú permanecen visibles */
+     
+
 
     .navbar .nav-links {
         display: none;
@@ -940,8 +939,8 @@ select.btn-presupuesto option {
         margin-right: 10px;
     }
 
-    /* Al abrir el buscador se libera espacio
-       ocultando temporalmente el logotipo */
+     
+
 
     .navbar.nav-buscando .logo {
         display: none;
@@ -982,5 +981,186 @@ select.btn-presupuesto option {
 
     .navbar .nav-icons {
         gap: 12px;
+    }
+}
+
+ 
+
+
+
+.enlace-tarjeta-evento {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.tarjeta-evento {
+    height: 100%;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.tarjeta-evento:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+}
+
+.imagen-evento {
+    position: relative;
+    width: 100%;
+    height: 270px;
+    overflow: hidden;
+    background-color: #0d1b2a;
+}
+
+.imagen-evento img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.imagen-evento .fecha-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: #0d1b2a;
+    color: white;
+    padding: 9px 13px;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.imagen-evento .fecha-badge strong {
+    display: block;
+    font-size: 24px;
+}
+
+.precio-evento {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background-color: #ffcf33;
+    color: #0d1b2a;
+    border-radius: 25px;
+    padding: 9px 13px;
+    font-size: 12px;
+    font-weight: 700;
+    max-width: 55%;
+    text-align: center;
+}
+
+.tarjeta-evento .tarjeta-cuerpo h3 {
+    color: #0d1b2a;
+    font-size: 17px;
+    margin: 12px 0 10px;
+    line-height: 1.4;
+}
+
+.tarjeta-evento .tarjeta-cuerpo > p {
+    color: #666;
+    font-size: 13px;
+    line-height: 1.5;
+    margin-bottom: 14px;
+}
+
+.tarjeta-evento .tarjeta-pie {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 8px;
+    color: #555;
+    font-size: 12px;
+}
+
+@media (max-width: 600px) {
+    .imagen-evento {
+        height: 310px;
+    }
+}
+
+ 
+
+
+
+.enlace-evento-inicio {
+    text-decoration: none;
+    color: inherit;
+    flex-shrink: 0;
+    display: block;
+}
+
+.card-evento-inicio {
+    width: 280px;
+    min-width: 280px;
+    min-height: 160px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 8px;
+    background: rgba(13, 27, 42, 0.65);
+}
+
+.card-evento-inicio h3 {
+    font-size: 16px;
+    color: white;
+    margin: 0;
+    line-height: 1.4;
+}
+
+.card-evento-inicio p {
+    color: #ddd;
+    font-size: 12px;
+    margin: 0;
+}
+
+.fecha-evento-inicio {
+    color: #ffcf33;
+    font-weight: 700;
+    font-size: 12px;
+}
+
+.precio-evento-inicio {
+    color: white;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.enlace-evento-inicio:hover .card-evento-inicio {
+    background: rgba(217, 4, 41, 0.65);
+}
+
+ 
+
+.scrolling-cards {
+    display: flex;
+    gap: 20px;
+    width: max-content;
+    animation: scroll-left 65s linear infinite;
+}
+
+.scrolling-wrapper:hover .scrolling-cards,
+.scrolling-wrapper:focus-within .scrolling-cards {
+    animation-play-state: paused;
+}
+
+@keyframes scroll-left {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(calc(-50% - 10px));
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .scrolling-cards {
+        animation: none;
+    }
+
+    .scrolling-wrapper {
+        overflow-x: auto;
     }
 }

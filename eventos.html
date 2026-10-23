@@ -35,74 +35,67 @@
             <p class="subtitulo">Descubre todo lo que la ciudad tiene para ti esta temporada.</p>
         </div>
 
-        <section class="grid-tarjetas">
-            
-            
-            
-            <a href="evento-detalle.html" style="text-decoration: none; color: inherit;">
-                <div class="tarjeta">
-                    <div class="fecha-badge"><strong>17</strong><br>Oct</div>
-                    <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" alt="Festival">
-                    <div class="tarjeta-cuerpo">
-                        <h3>Festival de la Primavera</h3>
-                        <span class="categoria-texto">Cultura / Música</span>
-                        <div class="tarjeta-pie mt-10">
-                            <span> Parque Juárez</span>
-                            <span> Gratis</span>
-                        </div>
-                    </div>
-                </div>
-            </a>
+        
+<section class="grid-tarjetas" id="lista-eventos">
+    
+</section>
 
-            
-            <a href="#" style="text-decoration: none; color: inherit;">
-                <div class="tarjeta">
-                    <div class="fecha-badge"><strong>24</strong><br>Oct</div>
-                    <img src="https://images.unsplash.com/photo-1460723237483-7a6dc9d0b212?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" alt="Concierto">
-                    <div class="tarjeta-cuerpo">
-                        <h3>Concierto Sinfónica OSX</h3>
-                        <span class="categoria-texto">Música Clásica</span>
-                        <div class="tarjeta-pie mt-10">
-                            <span> Sala Tlaqná</span>
-                            <span> $150 - $300</span>
-                        </div>
-                    </div>
-                </div>
-            </a>
-
-            
-            <a href="#" style="text-decoration: none; color: inherit;">
-                <div class="tarjeta">
-                    <div class="fecha-badge"><strong>31</strong><br>Oct</div>
-                    <img src="https://images.unsplash.com/photo-1508997449629-303059a039c0?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" alt="Museo">
-                    <div class="tarjeta-cuerpo">
-                        <h3>Noche de Museo MAX</h3>
-                        <span class="categoria-texto">Historia / Recorridos</span>
-                        <div class="tarjeta-pie mt-10">
-                            <span> Museo de Antropología</span>
-                            <span> Gratis</span>
-                        </div>
-                    </div>
-                </div>
-            </a>
-
-            
-            <a href="#" style="text-decoration: none; color: inherit;">
-                <div class="tarjeta">
-                    <div class="fecha-badge"><strong>05</strong><br>Nov</div>
-                    <img src="https://images.unsplash.com/es/fotos/un-grupo-de-personas-de-pie-encima-de-un-piso-de-madera-H6IuhK68rRE" alt="Teatro">
-                    <div class="tarjeta-cuerpo">
-                        <h3>Obra: El Cascanueces</h3>
-                        <span class="categoria-texto">Teatro / Danza</span>
-                        <div class="tarjeta-pie mt-10">
-                            <span> Teatro del Estado</span>
-                            <span> $200 - $450</span>
-                        </div>
-                    </div>
-                </div>
-            </a>
-
-        </section>
     </main>
+    
+<script src="datos-eventos.js"></script>
+
+<script>document.addEventListener("DOMContentLoaded", () => {
+
+    const contenedor = document.getElementById("lista-eventos");
+
+    contenedor.innerHTML = "";
+
+    eventosXalapa.forEach(evento => {
+
+        const tarjeta = document.createElement("a");
+        tarjeta.href = "evento-detalle.html?id=" +
+            encodeURIComponent(evento.id);
+
+        tarjeta.className = "enlace-tarjeta-evento";
+
+        tarjeta.innerHTML = `
+            <article class="tarjeta tarjeta-evento">
+                <div class="imagen-evento">
+                    <img src="${evento.imagen}"
+                         alt="Cartel de ${evento.nombre}"
+                         loading="lazy">
+
+                    <div class="fecha-badge">
+                        <strong>${evento.dia}</strong>
+                        <span>${evento.mes}</span>
+                    </div>
+
+                    <span class="precio-evento">
+                        ${evento.precio}
+                    </span>
+                </div>
+
+                <div class="tarjeta-cuerpo">
+                    <span class="etiqueta roja">
+                        ${evento.etiquetas?.includes("Halloween") ? "Halloween · " : ""}${evento.categoria}
+                    </span>
+
+                    <h3>${evento.nombre}</h3>
+
+                    <p>${evento.descripcion}</p>
+
+                    <div class="tarjeta-pie mt-10">
+                        <span>📍 ${evento.lugar}</span>
+                        <span>${evento.hora} hrs</span>
+                    </div>
+                </div>
+            </article>
+        `;
+
+        contenedor.appendChild(tarjeta);
+    });
+});
+</script>
+
 </body>
 </html>

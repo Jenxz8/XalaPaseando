@@ -11,7 +11,7 @@
 <script src="navegacion.js"></script>
 <body class="tema-claro">
 
-    <!-- BARRA DE NAVEGACIÓN -->
+    
     <nav class="navbar">
         <div class="logo">
             <span class="logo-text"><span class="logo-x">X</span>ala<span class="logo-paseando">Paseando</span></span>
@@ -60,7 +60,7 @@
                 <p class="subtitulo" id="desc-categoria">Disfruta de la mejor gastronomía, desde el tradicional café de altura hasta antojitos locales.</p>
             </div>
             
-            <!-- FILTROS: PRECIO Y ESTRELLAS -->
+            
             <div style="display: flex; gap: 15px; flex-wrap: wrap;">
                 <select class="btn-presupuesto" id="filtro-precio" onchange="filtrarLugares()">
                     <option value="todos">Todos los precios ⌄</option>
@@ -70,7 +70,7 @@
                     <option value="caro">Exclusivo (Más de $300)</option>
                 </select>
 
-                <!-- FILTRO DE ESTRELLAS -->
+                
                 <select class="btn-presupuesto" style="background-color: #ffb703; color: #0d1b2a;" id="filtro-estrellas" onchange="filtrarLugares()">
                     <option value="todas">Calificación (Todas) ⭐</option>
                     <option value="5">5 Estrellas ⭐⭐⭐⭐⭐</option>
@@ -81,12 +81,12 @@
         </div>
 
         <section class="grid-tarjetas" id="contenedor-lugares">
-            <!-- JavaScript llenará este espacio -->
+            
         </section>
 
     </main>
 
-    <!-- VENTANA EMERGENTE (MODAL) PARA LOS DETALLES Y MINIMAPA -->
+    
     <div id="modal-lugar" class="modal-oculto">
         <div class="modal-contenido">
             <span class="cerrar-modal" onclick="cerrarModal()">✕</span>
@@ -97,31 +97,44 @@
                 <span id="modal-calificacion" style="font-weight: 600;">5.0</span>
             </div>
 
-            <!-- BLOQUE DEL HORARIO -->
+            
             <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 15px; font-size: 15px; color: #444;">
                 <span style="font-size: 18px;">🕒</span>
                 <span id="modal-horario"></span>
             </div>
             
-            <!-- MINIMAPA DE GOOGLE -->
+            
             <div id="modal-mapa-contenedor" style="width: 100%; height: 200px; border-radius: 12px; overflow: hidden; margin-bottom: 20px;">
                 <iframe id="modal-mapa" src="" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
             </div>
+            <a
+    id="modal-mapa-enlace"
+    href="#"
+    target="_blank"
+    rel="noopener noreferrer"
+    style="display:block; margin:-10px 0 20px;
+           color:#d90429; font-size:13px;
+           font-weight:600; text-decoration:none;"
+>
+    Ver ubicación en Google Maps ↗
+</a>
 
             <h3 style="margin-bottom: 15px;">Reseñas recientes</h3>
             <div id="modal-resenas-lista" style="display: flex; flex-direction: column; gap: 15px; margin-bottom: 20px;">
-                <!-- Aquí se inyectan las reseñas -->
+                
             </div>
 
-            <!-- BOTÓN QUE LLEVARÁ A COMUNIDAD.HTML -->
+            
             <button class="btn-asistir" id="btn-ir-comunidad" style="text-align: center; width: 100%;">Ver todas las reseñas en Comunidad</button>
         </div>
     </div>
 
-    <!-- SCRIPT DE JAVASCRIPT -->
-    <script>
-        const lugares = [
-            // LULÚ CAFÉ 
+    
+<script src="catalogo-lugares.js"></script>
+
+
+<script>        const lugares = [
+             
             { 
                 id: 'lulu-cafe',
                 categoria: 'restaurantes', 
@@ -143,8 +156,8 @@
                 ]
             },
             
-            // OTROS LUGARES
-            // LA ESTANCIA DE LOS TECAJETES 
+             
+             
             { 
                 id: 'tecajetes', 
                 categoria: 'restaurantes', 
@@ -167,6 +180,40 @@
             { id: 'asadero', categoria: 'restaurantes', nombre: 'Asadero Cien', desc: 'El lugar por excelencia para cortes finos.', tag: 'Cortes', color: 'oscura', ubi: 'Maestros Ver.', precioTxt: '$350 - $600', nivelPrecio: 'caro', img: 'https://images.unsplash.com/photo-1544148103-0773bf10d330', calificacion: 4.7, estrellasNum: 5, horario: 'Horario no disponible', mapaUrl: '', resenas: [] },
             { id: 'teatro', categoria: 'cultura', nombre: 'Teatro J.J. Herrera', desc: 'Foro histórico para obras independientes.', tag: 'Teatro', color: 'roja', ubi: 'Centro', precioTxt: 'Libre', nivelPrecio: 'gratis', img: 'https://images.unsplash.com/photo-1507676184212-d0330a15233c', calificacion: 4.2, estrellasNum: 4, horario: 'Abierto según función', mapaUrl: '', resenas: [] }
         ];
+
+ 
+
+const lugaresExistentes = [
+    "Lulú Café",
+    "La Estancia de los Tecajetes",
+    "Asadero Cien",
+    "Teatro J. J. Herrera"
+];
+
+const normalizarNombre = texto =>
+    texto.toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/[^a-z0-9]/g, "");
+
+const nombresExistentes = new Set(
+    lugaresExistentes.map(normalizarNombre)
+);
+
+lugares.push(
+    ...window.catalogoLugares.filter(lugar =>
+        !nombresExistentes.has(normalizarNombre(lugar.nombre))
+    )
+);
+
+ 
+lugares.forEach(lugar => {
+    if (!lugar.mapaUrl) {
+        const mapas = crearMapaLugar(lugar.nombre);
+        lugar.mapaUrl = mapas.mapaUrl;
+        lugar.mapaBusquedaUrl = mapas.mapaBusquedaUrl;
+    }
+});
 
         let categoriaActual = 'restaurantes';
         let lugarModalActual = null;
@@ -277,8 +324,42 @@
             document.getElementById('modal-nombre').innerText = lugar.nombre;
             document.getElementById('modal-calificacion').innerText = lugar.calificacion;
             document.getElementById('modal-mapa').src = lugar.mapaUrl || ''; 
+
             
-            // Inyectar el horario
+const enlaceMapa = document.getElementById('modal-mapa-enlace');
+
+const mapaBusqueda = lugar.mapaBusquedaUrl ||
+    crearMapaLugar(lugar.nombre).mapaBusquedaUrl;
+
+enlaceMapa.href = mapaBusqueda;
+
+ 
+const listaResenasEjemplo = document.getElementById(
+    'modal-resenas-lista'
+);
+
+const avisoAnterior = document.getElementById(
+    'aviso-resenas-ejemplo'
+);
+
+if (avisoAnterior) {
+    avisoAnterior.remove();
+}
+
+if (lugar.resenasFicticias) {
+    const aviso = document.createElement('p');
+    aviso.id = 'aviso-resenas-ejemplo';
+    aviso.textContent =
+    'Opiniones de demostración creadas para XalaPaseando.';
+    aviso.style.cssText =
+        'font-size:12px;color:#805500;background:#fff6db;' +
+        'padding:10px;border-radius:8px;margin-bottom:12px;';
+
+    listaResenasEjemplo.before(aviso);
+}
+
+            
+             
             actualizarHorarioModal();
             intervaloHorario = setInterval(actualizarHorarioModal, 15000);
             
@@ -321,14 +402,24 @@
 
         window.onload = () => {
 
-    // Mostrar los lugares de la categoría inicial
+     
     filtrarLugares();
 
-    // Leer si el buscador envió un lugar específico
+     
     const parametros = new URLSearchParams(
         window.location.search
     );
 
+    const categoriaSolicitada = parametros.get('categoria');
+    const categoriasDisponibles = {
+        restaurantes: ['Restaurantes y Cafés', 'Descubre la gastronomía de Xalapa.'],
+        cultura: ['Cultura y Cine', 'Descubre los espacios culturales de Xalapa.'],
+        arte: ['Galerías y Arte', 'Descubre el arte de Xalapa.'],
+        naturaleza: ['Naturaleza y Parques', 'Explora los espacios naturales de Xalapa.']
+    };
+    if (categoriaSolicitada && categoriasDisponibles[categoriaSolicitada]) {
+        cambiarCategoria(categoriaSolicitada, ...categoriasDisponibles[categoriaSolicitada]);
+    }
     const idLugar = parametros.get('lugar');
 
     if (idLugar) {
@@ -339,7 +430,7 @@
 
         if (lugar) {
 
-            // Cambiar a la categoría correspondiente
+             
             const categorias = {
                 restaurantes: {
                     titulo: 'Restaurantes y Cafés',
@@ -369,11 +460,12 @@
                 );
             }
 
-            // Abrir automáticamente el restaurante o lugar
+             
             abrirModal(idLugar);
         }
     }
 };
-    </script>
+    
+</script>
 </body>
 </html>

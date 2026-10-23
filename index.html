@@ -13,8 +13,28 @@
     
     
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+
+<style> 
+.seccion-eventos-inicio { background: #0d1b2a; color: white; padding: 52px 0 62px; overflow: hidden; }
+.encabezado-eventos-inicio { max-width: 1200px; margin: 0 auto 26px; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; gap: 20px; }
+.encabezado-eventos-inicio h2 { color: white; font-size: 28px; margin-bottom: 8px; }
+.encabezado-eventos-inicio p { color: #cbd5e1; font-size: 14px; }
+.ver-eventos-inicio { color: #ff6070; text-decoration: none; font-size: 14px; font-weight: 600; white-space: nowrap; }
+.carrusel-eventos-inicio { overflow-x: auto; width: 100%; scrollbar-width: thin; }
+.pista-eventos-inicio { display: flex; gap: 20px; width: max-content; padding: 4px 20px 12px; animation: deslizar-carteles 75s linear infinite; }
+.tarjeta-imagen-evento { display: block; flex: 0 0 250px; width: 250px; overflow: hidden; border-radius: 14px; background: #172b40; text-decoration: none; color: white; box-shadow: 0 4px 15px rgba(0,0,0,.18); }
+.tarjeta-imagen-evento img { display: block; width: 100%; height: 300px; object-fit: contain; background: #091523; }
+.info-evento-inicio { padding: 14px 15px 18px; }
+.info-evento-inicio h3 { color: white; margin: 0 0 8px; font-size: 15px; line-height: 1.35; min-height: 40px; }
+.info-evento-inicio p { color: #cbd5e1; margin: 0 0 10px; font-size: 12px; }
+.precio-inicio { color: #ffcf33; font-size: 13px; font-weight: 700; }
+.carrusel-eventos-inicio:hover .pista-eventos-inicio, .carrusel-eventos-inicio:focus-within .pista-eventos-inicio { animation-play-state: paused; }
+@keyframes deslizar-carteles { from { transform: translateX(0); } to { transform: translateX(calc(-50% - 10px)); } }
+@media(max-width:768px) { .encabezado-eventos-inicio { align-items: flex-start; flex-direction: column; } .encabezado-eventos-inicio h2 { font-size: 23px; } .tarjeta-imagen-evento { flex-basis: 220px; width: 220px; } .tarjeta-imagen-evento img { height: 260px; } .pista-eventos-inicio { animation-duration: 90s; } }
+@media(prefers-reduced-motion: reduce) { .pista-eventos-inicio { animation: none; } }
+.etiqueta-halloween-inicio { display: inline-block; background: #a446d1; color: white; font-size: 11px; font-weight: 700; border-radius: 12px; padding: 4px 9px; margin-bottom: 8px; }
+</style>
 </head>
-<script src="navegacion.js"></script>
 <body>
 
     
@@ -54,68 +74,90 @@
         </div>
 
         
-        <div class="scrolling-wrapper animate-fade-up delay-2">
-            <div class="scrolling-cards">
-                
-                <a href="eventos.html" style="text-decoration: none; color: inherit;">
-                    <div class="card">
-                        <h3>Evento1</h3>
-                        <p>Centro Histórico • 20:00 hrs</p>
-                    </div>
-                </a>
-                
-                <a href="eventos.html" style="text-decoration: none; color: inherit;">
-                    <div class="card">
-                        <h3>Evento2</h3>
-                        <p>Parque Juárez • 10:00 hrs</p>
-                    </div>
-                </a>
-                
-                <a href="eventos.html" style="text-decoration: none; color: inherit;">
-                    <div class="card">
-                        <h3>Evento3</h3>
-                        <p>Teatro del Estado • 18:00 hrs</p>
-                    </div>
-                </a>
-                
-                <a href="eventos.html" style="text-decoration: none; color: inherit;">
-                    <div class="card">
-                        <h3>Evento4</h3>
-                        <p>Callejones • 21:00 hrs</p>
-                    </div>
-                </a>
-                
-                
-                <a href="eventos.html" style="text-decoration: none; color: inherit;">
-                    <div class="card">
-                        <h3>Eveto5</h3>
-                        <p>Centro Histórico • 20:00 hrs</p>
-                    </div>
-                </a>
-                
-                <a href="eventos.html" style="text-decoration: none; color: inherit;">
-                    <div class="card">
-                        <h3>Evento6</h3>
-                        <p>Parque Juárez • 10:00 hrs</p>
-                    </div>
-                </a>
-                
-                <a href="eventos.html" style="text-decoration: none; color: inherit;">
-                    <div class="card">
-                        <h3>Evento7</h3>
-                        <p>Teatro del Estado • 18:00 hrs</p>
-                    </div>
-                </a>
-                
-                <a href="eventos.html" style="text-decoration: none; color: inherit;">
-                    <div class="card">
-                        <h3>y ya lo dmass zzz</h3>
-                        <p>Callejones • 21:00 hrs</p>
-                    </div>
-                </a>
-            </div>
-        </div>
+       
     </header>
+    
+
+
+<section class="seccion-eventos-inicio">
+
+    <div class="encabezado-eventos-inicio">
+        <div>
+            <h2>Próximos eventos en Xalapa</h2>
+            <p>Descubre los mejores planes y actividades de la ciudad.</p>
+        </div>
+
+        <a href="eventos.html" class="ver-eventos-inicio">
+            Ver todos los eventos →
+        </a>
+    </div>
+
+    <div class="carrusel-eventos-inicio">
+        <div class="pista-eventos-inicio" id="eventos-inicio">
+            
+        </div>
+    </div>
+
+</section>
+
+
+<script src="datos-eventos.js"></script>
+
+<script>document.addEventListener("DOMContentLoaded", () => {
+    const contenedor = document.getElementById("eventos-inicio");
+    if (!contenedor) return;
+    if (typeof eventosXalapa === "undefined" || !Array.isArray(eventosXalapa)) {
+        contenedor.textContent = "No se pudo cargar datos-eventos.js. Revisa que esté en la misma carpeta que index.html.";
+        console.error("Falta datos-eventos.js o el arreglo eventosXalapa.");
+        return;
+    }
+
+    contenedor.replaceChildren();
+
+    function crearTarjeta(evento, esDuplicado = false) {
+        const enlace = document.createElement("a");
+        enlace.className = "tarjeta-imagen-evento";
+        enlace.href = "evento-detalle.html?id=" + encodeURIComponent(evento.id);
+        if (esDuplicado) {
+            enlace.setAttribute("aria-hidden", "true");
+            enlace.tabIndex = -1;
+        }
+
+        const imagen = document.createElement("img");
+        imagen.src = evento.imagen;
+        imagen.alt = "Cartel de " + evento.nombre;
+        imagen.loading = "lazy";
+
+        const info = document.createElement("div");
+        info.className = "info-evento-inicio";
+        const titulo = document.createElement("h3");
+        titulo.textContent = evento.nombre;
+        const fecha = document.createElement("p");
+        fecha.textContent = evento.dia + " " + evento.mes + " · " + evento.hora + " hrs";
+        const precio = document.createElement("span");
+        precio.className = "precio-inicio";
+        precio.textContent = evento.precio;
+        if (evento.etiquetas?.includes("Halloween")) {
+            const etiqueta = document.createElement("span");
+            etiqueta.className = "etiqueta-halloween-inicio";
+            etiqueta.textContent = "Halloween";
+            info.appendChild(etiqueta);
+        }
+        info.append(titulo, fecha, precio);
+        enlace.append(imagen, info);
+        return enlace;
+    }
+
+    eventosXalapa.forEach(evento => contenedor.appendChild(crearTarjeta(evento)));
+     
+    if (eventosXalapa.length > 1) {
+        eventosXalapa.forEach(evento => contenedor.appendChild(crearTarjeta(evento, true)));
+    } else {
+        contenedor.style.animation = "none";
+    }
+});
+</script>
+<script src="navegacion.js"></script>
 
 </body>
 </html>

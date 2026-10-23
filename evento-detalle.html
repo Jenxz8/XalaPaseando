@@ -32,71 +32,163 @@
     </nav>
 
     
-    <header class="evento-portada" style="background-image: url('https://images.unsplash.com/photo-1514525253161-7a46d19cd819?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');">
-        <div class="evento-overlay"></div>
-        <div class="evento-titulo-contenedor">
-            <span class="etiqueta roja">Cultura y Música</span>
-            <h1>Festival de la Primavera</h1>
-            <p>Una noche llena de música, arte y tradición xalapeña.</p>
-        </div>
-    </header>
-
     
-    <main class="evento-contenido">
-        
-        
-        <div class="evento-info">
-            <h2>Acerca de este evento</h2>
-            <p>Ven a disfrutar del Festival de la Primavera en el corazón de Xalapa. Contaremos con la participación de bandas locales, exposiciones de arte al aire libre y venta de artesanías. Es el plan perfecto para ir con amigos o en familia y disfrutar del excelente clima de la ciudad.</p>
-            
-            <h3>Organizador</h3>
-            <p><strong>Ayuntamiento de Xalapa</strong> (Perfil verificado )</p>
+<header class="evento-portada" id="detalle-portada">
+    <div class="evento-overlay"></div>
+
+    <div class="evento-titulo-contenedor">
+        <span class="etiqueta roja" id="detalle-categoria"></span>
+        <h1 id="detalle-nombre"></h1>
+        <p id="detalle-descripcion-corta"></p>
+    </div>
+</header>
+
+<main class="evento-contenido">
+
+    <div class="evento-info">
+        <h2>Acerca de este evento</h2>
+        <p id="detalle-descripcion"></p>
+
+        <h3>Cartel del evento</h3>
+        <img id="detalle-imagen"
+             alt="Cartel del evento"
+             style="width:100%;max-width:500px;
+                    border-radius:12px;margin-top:15px;">
+
+        <p style="margin-top:15px;font-size:12px;color:#666;">
+            Información basada en el cartel proporcionado.
+            Consulta al organizador para confirmar cambios,
+            disponibilidad y condiciones de acceso.
+        </p>
+    </div>
+
+    <aside class="evento-tarjeta">
+
+        <div class="tarjeta-dato countdown">
+            <strong id="detalle-estado"></strong>
         </div>
 
-        
-        <aside class="evento-tarjeta">
-            
-            
-            <div class="tarjeta-dato countdown">
-                 <strong>Faltan 3 días</strong>
+        <div class="tarjeta-dato">
+            <span>📅</span>
+            <div>
+                <strong>Fecha y hora</strong>
+                <p id="detalle-fecha"></p>
             </div>
-            
-            
-            <div class="tarjeta-dato">
-                <span></span>
-                <div>
-                    <strong>Fecha y hora</strong>
-                    <p>Sábado, 17 de Octubre de 2026<br>18:00 hrs - 23:00 hrs</p>
-                </div>
+        </div>
+
+        <div class="tarjeta-dato">
+            <span>📍</span>
+            <div>
+                <strong>Ubicación</strong>
+                <p id="detalle-lugar"></p>
+
+                <a id="detalle-mapa"
+                   href="#"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   class="enlace-mapa">
+                    Ver en Google Maps ↗
+                </a>
             </div>
+        </div>
 
-            
-            <div class="tarjeta-dato">
-                <span></span>
-                <div>
-                    <strong>Ubicación</strong>
-                    <p>Parque Juárez<br>Centro Histórico, Xalapa.</p>
-                    <a href="#" class="enlace-mapa">Ver en mapa de Google ➔</a>
-                </div>
+        <div class="tarjeta-dato">
+            <span>🎟️</span>
+            <div>
+                <strong>Precio de entrada</strong>
+                <p id="detalle-precio"></p>
             </div>
+        </div>
 
-            
-            <div class="tarjeta-dato">
-                <span></span>
-                <div>
-                    <strong>Precio de entrada</strong>
-                    <p>Totalmente Gratuito</p>
-                </div>
-            </div>
+        <a href="eventos.html"
+           class="btn-asistir"
+           style="text-decoration:none;text-align:center;
+                  display:block;">
+            ← Volver a Eventos
+        </a>
+    </aside>
 
-            
-            <a href="https://cartelera.xalapa.gob.mx" target="_blank" class="btn-asistir" style="text-decoration: none; text-align: center; display: block; box-sizing: border-box;">
-                Me interesa
-            </a>
-            
-        </aside>
+</main>
 
-    </main>
+
+<script src="datos-eventos.js"></script>
+
+<script>document.addEventListener("DOMContentLoaded", () => {
+
+    const parametros = new URLSearchParams(
+        window.location.search
+    );
+
+    const id = parametros.get("id");
+    const evento = obtenerEvento(id);
+
+    if (!evento) {
+        document.getElementById("detalle-nombre").textContent =
+            "Evento no encontrado";
+
+        document.querySelector(".evento-contenido").innerHTML =
+            '<p>Este evento no está disponible. ' +
+            '<a href="eventos.html">Volver a Eventos</a></p>';
+
+        return;
+    }
+
+    document.title = evento.nombre + " - XalaPaseando";
+
+    document.getElementById("detalle-nombre").textContent =
+        evento.nombre;
+
+    document.getElementById("detalle-categoria").textContent =
+        (evento.etiquetas?.includes("Halloween") ? "Halloween · " : "") + evento.categoria;
+
+    document.getElementById("detalle-descripcion-corta").textContent =
+        evento.lugar + " · " + evento.hora + " hrs";
+
+    document.getElementById("detalle-descripcion").textContent =
+        evento.descripcion;
+
+    document.getElementById("detalle-imagen").src =
+        evento.imagen;
+
+    document.getElementById("detalle-imagen").alt =
+        "Cartel de " + evento.nombre;
+
+    document.getElementById("detalle-fecha").textContent =
+        fechaEventoLarga(evento) + " · " +
+        evento.hora + " hrs";
+
+    document.getElementById("detalle-lugar").textContent =
+        evento.lugar + ", " + evento.ubicacion;
+
+    document.getElementById("detalle-precio").textContent =
+        evento.precio;
+
+    document.getElementById("detalle-mapa").href =
+        enlaceMapaEvento(evento);
+
+    document.getElementById("detalle-portada").style.backgroundImage =
+        'url("' + evento.imagen + '")';
+
+     
+    const hoy = new Date();
+    const fechaActual = new Intl.DateTimeFormat("en-CA", {
+        timeZone: "America/Mexico_City",
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit"
+    }).format(hoy);
+
+    const estado = document.getElementById("detalle-estado");
+
+    if (evento.fecha < fechaActual) {
+        estado.textContent = "Fecha del evento pasada";
+    } else if (evento.fecha === fechaActual) {
+        estado.textContent = "Programado para hoy";
+    } else {
+        estado.textContent = "Próximo evento";
+    }
+});
+</script>
 
 </body>
 </html>
