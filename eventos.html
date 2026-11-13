@@ -7,11 +7,88 @@
     <link rel="icon" type="image/png" href="Icons/Icono.png">
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+    <style>
+        .filtros-eventos-contenedor {
+            margin: 25px 0 35px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .barra-busqueda-eventos {
+            position: relative;
+            width: 100%;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        .barra-busqueda-eventos input {
+            width: 100%;
+            height: 50px;
+            padding: 0 50px 0 20px;
+            border: 1px solid rgba(217, 4, 41, 0.4);
+            border-radius: 30px;
+            background-color: #0d1b2a;
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 15px;
+            outline: none;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+        .barra-busqueda-eventos input::placeholder {
+            color: #94a3b8;
+        }
+        .barra-busqueda-eventos button {
+            position: absolute;
+            right: 6px;
+            top: 6px;
+            width: 38px;
+            height: 38px;
+            border: none;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff334b, #d90429);
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+        .botones-filtros-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .filtro-chip {
+            background-color: #172b40;
+            color: #cbd5e1;
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 10px 18px;
+            border-radius: 25px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .filtro-chip:hover, .filtro-chip.activo {
+            background-color: #d90429;
+            color: white;
+            border-color: #d90429;
+            transform: translateY(-2px);
+        }
+        .contador-eventos {
+            font-size: 18px;
+            font-weight: 700;
+            color: #0d1b2a;
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
-<script src="navegacion.js"></script>
 <body class="tema-claro">
 
-    
+    <!-- Navegación superior -->
     <nav class="navbar">
         <div class="logo">
             <span class="logo-text"><span class="logo-x">X</span>ala<span class="logo-paseando">Paseando</span></span>
@@ -22,6 +99,7 @@
             <li><a href="explora.html">Explora</a></li>
             <li><a href="eventos.html" class="active">Eventos</a></li>
             <li><a href="comunidad.html">Comunidad</a></li>
+            <li><a href="nosotros.html">Nosotros</a></li>
         </ul>
         <div class="nav-icons">
            <img src="Icons/Icono_Lupa.png" alt="Buscar" class="icon-img">
@@ -30,72 +108,121 @@
     </nav>
 
     <main class="contenedor-explora">
-        <div class="encabezado-seccion">
+        <div class="encabezado-seccion" style="text-align: center; margin-bottom: 10px;">
             <h2 class="titulo-azul">Próximos Eventos en Xalapa</h2>
             <p class="subtitulo">Descubre todo lo que la ciudad tiene para ti esta temporada.</p>
         </div>
 
-        
-<section class="grid-tarjetas" id="lista-eventos">
-    
-</section>
+        <!-- Buscador y Filtros interactivos -->
+        <div class="filtros-eventos-contenedor">
+            <div class="barra-busqueda-eventos">
+                <input type="text" id="input-buscar-evento" placeholder="Buscar eventos, talleres, charlas...">
+                <button id="btn-buscar">🔍</button>
+            </div>
 
+            <div class="botones-filtros-grid" id="contenedor-filtros">
+                <button class="filtro-chip activo" data-filtro="todos">Ver todas</button>
+                <button class="filtro-chip" data-filtro="gratis">🎁 Gratis</button>
+                <button class="filtro-chip" data-filtro="pago">💳 De pago</button>
+                <button class="filtro-chip" data-filtro="Taller">✏️ Taller</button>
+                <button class="filtro-chip" data-filtro="Música">🎵 Música</button>
+                <button class="filtro-chip" data-filtro="Teatro">🎟️ Teatro</button>
+                <button class="filtro-chip" data-filtro="Cine">🎬 Cine</button>
+                <button class="filtro-chip" data-filtro="Arte">🖼️ Arte</button>
+            </div>
+        </div>
+
+        <div class="contador-eventos" id="contador-texto"></div>
+
+        <!-- Cuadrícula de Eventos -->
+        <section class="grid-tarjetas" id="lista-eventos"></section>
     </main>
     
-<script src="datos-eventos.js"></script>
+    <script src="datos-eventos.js"></script>
+    <script src="navegacion.js"></script>
 
-<script>document.addEventListener("DOMContentLoaded", () => {
+    <script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const contenedor = document.getElementById("lista-eventos");
+        const inputBuscar = document.getElementById("input-buscar-evento");
+        const botonesFiltros = document.querySelectorAll(".filtro-chip");
+        const contadorTexto = document.getElementById("contador-texto");
 
-    const contenedor = document.getElementById("lista-eventos");
+        let filtroActual = "todos";
+        let textoBusqueda = "";
 
-    contenedor.innerHTML = "";
+        function renderizarEventos() {
+            contenedor.innerHTML = "";
 
-    eventosXalapa.forEach(evento => {
+            const eventosFiltrados = eventosXalapa.filter(evento => {
+                const coincideTexto = (evento.nombre + " " + evento.descripcion + " " + evento.lugar + " " + evento.categoria)
+                    .toLowerCase()
+                    .includes(textoBusqueda.toLowerCase());
 
-        const tarjeta = document.createElement("a");
-        tarjeta.href = "evento-detalle.html?id=" +
-            encodeURIComponent(evento.id);
+                if (!coincideTexto) return false;
 
-        tarjeta.className = "enlace-tarjeta-evento";
+                if (filtroActual === "todos") return true;
+                if (filtroActual === "gratis") return evento.precio.toLowerCase().includes("gratis") || evento.precio.toLowerCase().includes("libre");
+                if (filtroActual === "pago") return !evento.precio.toLowerCase().includes("gratis") && !evento.precio.toLowerCase().includes("libre");
+                
+                return evento.categoria.toLowerCase() === filtroActual.toLowerCase();
+            });
 
-        tarjeta.innerHTML = `
-            <article class="tarjeta tarjeta-evento">
-                <div class="imagen-evento">
-                    <img src="${evento.imagen}"
-                         alt="Cartel de ${evento.nombre}"
-                         loading="lazy">
+            contadorTexto.textContent = `${eventosFiltrados.length} eventos encontrados`;
 
-                    <div class="fecha-badge">
-                        <strong>${evento.dia}</strong>
-                        <span>${evento.mes}</span>
-                    </div>
+            if (eventosFiltrados.length === 0) {
+                contenedor.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: #666; padding: 40px;">No se encontraron eventos con esos criterios.</p>`;
+                return;
+            }
 
-                    <span class="precio-evento">
-                        ${evento.precio}
-                    </span>
-                </div>
+            eventosFiltrados.forEach(evento => {
+                const tarjeta = document.createElement("a");
+                tarjeta.href = "evento-detalle.html?id=" + encodeURIComponent(evento.id);
+                tarjeta.className = "enlace-tarjeta-evento";
 
-                <div class="tarjeta-cuerpo">
-                    <span class="etiqueta roja">
-                        ${evento.etiquetas?.includes("Halloween") ? "Halloween · " : ""}${evento.categoria}
-                    </span>
+                tarjeta.innerHTML = `
+                    <article class="tarjeta tarjeta-evento">
+                        <div class="imagen-evento">
+                            <img src="${evento.imagen}" alt="Cartel de ${evento.nombre}" loading="lazy">
+                            <div class="fecha-badge">
+                                <strong>${evento.dia}</strong>
+                                <span>${evento.mes}</span>
+                            </div>
+                            <span class="precio-evento">${evento.precio}</span>
+                        </div>
+                        <div class="tarjeta-cuerpo">
+                            <span class="etiqueta roja">
+                                ${evento.etiquetas?.includes("Halloween") ? "Halloween · " : ""}${evento.categoria}
+                            </span>
+                            <h3>${evento.nombre}</h3>
+                            <p>${evento.descripcion}</p>
+                            <div class="tarjeta-pie mt-10">
+                                <span>📍 ${evento.lugar}</span>
+                                <span>${evento.hora} hrs</span>
+                            </div>
+                        </div>
+                    </article>
+                `;
+                contenedor.appendChild(tarjeta);
+            });
+        }
 
-                    <h3>${evento.nombre}</h3>
+        inputBuscar.addEventListener("input", (e) => {
+            textoBusqueda = e.target.value.trim();
+            renderizarEventos();
+        });
 
-                    <p>${evento.descripcion}</p>
+        botonesFiltros.forEach(boton => {
+            boton.addEventListener("click", () => {
+                botonesFiltros.forEach(b => b.classList.remove("activo"));
+                boton.classList.add("activo");
+                filtroActual = boton.getAttribute("data-filtro");
+                renderizarEventos();
+            });
+        });
 
-                    <div class="tarjeta-pie mt-10">
-                        <span>📍 ${evento.lugar}</span>
-                        <span>${evento.hora} hrs</span>
-                    </div>
-                </div>
-            </article>
-        `;
-
-        contenedor.appendChild(tarjeta);
+        renderizarEventos();
     });
-});
-</script>
-
+    </script>
 </body>
 </html>

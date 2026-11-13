@@ -29,7 +29,8 @@ document.addEventListener('DOMContentLoaded', () => {
         'inicio': 'index.html',
         'explora': 'explora.html',
         'eventos': 'eventos.html',
-        'comunidad': 'comunidad.html'
+        'comunidad': 'comunidad.html',
+        'nosotros': 'nosotros.html'
     };
 
     enlaces.querySelectorAll('a').forEach(enlace => {
@@ -85,6 +86,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 "tipo": "Página",
                 "url": "comunidad.html",
                 "palabras": "Comunidad"
+        },
+        {
+                "nombre": "Nosotros",
+                "tipo": "Página",
+                "url": "nosotros.html",
+                "palabras": "Nosotros"
         },
         {
                 "nombre": "Restaurantes y Cafés",

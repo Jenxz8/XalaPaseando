@@ -1,7 +1,3 @@
- 
-
-
-
 const CARPETA_EVENTOS = "Icons/";
 const EXTENSION_EVENTOS = ".png";
 
@@ -184,6 +180,111 @@ const eventosXalapa = [
         categoria: "Festival",
         descripcion: "Encuentro dedicado al K-pop en Xalapa, con actividades y concurso de baile.",
         imagen: fotoEvento(12)
+    },
+    {
+        id: "taller-pokemon",
+        nombre: "Taller de pintura: Pokémon",
+        categoria: "Taller",
+        etiquetas: ["Halloween"],
+        descripcion: "Taller de pintura con temática de Pokémon. Aprenderás técnicas de pintura mediante este taller creativo.",
+        imagen: fotoEvento(13),
+        fecha: "2026-11-28",
+        dia: "28",
+        mes: "NOV",
+        hora: "16:00",
+        lugar: "Umbral Cafetería",
+        ubicacion: "Xalapa, Ver.",
+        precio: "Consultar Costo"
+    },
+    {
+        id: "expo-decembrina",
+        nombre: "Alternativo Expo - Venta Decembrina",
+        categoria: "Arte",
+        etiquetas: [],
+        descripcion: "Expo-venta de arte y diseño con artistas, diseñadores y creadores. Selección especial de cerámica, escultura, grabado, ilustración, textiles, joyería y propuestas de autor. Espacio para encontrar regalos únicos, piezas para el hogar y conocer a los creadores.",
+        imagen: fotoEvento(14),
+        fecha: "2026-12-05",
+        dia: "05",
+        mes: "DIC",
+        hora: "10:00",
+        lugar: "Centro Recreativo Xalapeño",
+        ubicacion: "Xalapa, Ver.",
+        precio: "Entrada gratuita"
+    },
+    {
+        id: "taller-laberinto-fauno",
+        nombre: "Taller de escultura: Laberinto del Fauno",
+        categoria: "Taller",
+        etiquetas: [],
+        descripcion: "Taller de escultura con técnicas de modelado. Aprenderás técnicas de modelado inspiradas en el fantástico mundo del Laberinto del Fauno.",
+        imagen: fotoEvento(15),
+        fecha: "2026-11-20",
+        dia: "20",
+        mes: "NOV",
+        hora: "16:00",
+        lugar: "Umbral Cafetería",
+        ubicacion: "Xalapa, Ver.",
+        precio: "Consultar Costo"
+    },
+    {
+        id: "mau-teatro",
+        nombre: "MAU - Obra de Teatro",
+        categoria: "Teatro",
+        etiquetas: [],
+        descripcion: "Obra de teatro infantil sobre Mauricio, un gato callejero, y Nube, una gatita de casa, que viven una aventura que marca sus vidas. De Dylan Alarcón. Clasificación A.",
+        imagen: fotoEvento(16),
+        fecha: "2026-11-20",
+        dia: "20",
+        mes: "NOV",
+        hora: "20:00",
+        lugar: "Foro La Candileja",
+        ubicacion: "Sexta de Juárez #214, Xalapa, Ver.",
+        precio: "Preventa $120 / Taquilla $150"
+    },
+    {
+        id: "cine-animadores-mexicanos",
+        nombre: "Ciclo de Cine: Animadores Mexicanos (Juan José Medina)",
+        categoria: "Cine",
+        etiquetas: [],
+        descripcion: "Proyección de cortometraje de animación dirigido por Juan José Medina. Duración: 15 minutos. Forma parte del ciclo dedicado a animadores mexicanos.",
+        imagen: fotoEvento(17),
+        fecha: "2026-11-21",
+        dia: "21",
+        mes: "NOV",
+        hora: "19:00",
+        lugar: "La Colmena",
+        ubicacion: "Calle Constitución (junto a la delegación de tránsito), Banderilla, Ver.",
+        precio: "Entrada libre"
+    },
+    {
+        id: "son-ellas-concierto",
+        nombre: "Son Ellas: Mujeres sonando contra la violencia",
+        categoria: "Música",
+        etiquetas: [],
+        descripcion: "Concierto-conversatorio en conmemoración del Día Internacional de la Eliminación de la Violencia contra las Mujeres, organizado por la Universidad Veracruzana a través de la Coordinación de la Unidad de Género, la Dirección General de Difusión Cultural y la Casa del Lago UV.",
+        imagen: fotoEvento(18),
+        fecha: "2026-11-25",
+        dia: "25",
+        mes: "NOV",
+        hora: "17:00",
+        lugar: "Casa del Lago UV",
+        ubicacion: "Xalapa, Ver.",
+        precio: "Entrada libre"
+    },
+    {
+        id: "club-lectura-degustadas",
+        nombre: "Club de lectura: Lecturas Degustadas",
+        categoria: "Taller",
+        etiquetas: [],
+        descripcion: "Club de lectura en Tabby Café donde compartir historias y experiencias de lectura en comunidad, conducido por las anfitrionas Andrea Montoya y Yolitzin Hernández. Un espacio para leer sin prisas, saborear distintas historias y descubrir qué nos pasa cuando leemos.",
+        imagen: fotoEvento(19),
+        fecha: "2026-11-14",
+        dia: "14",
+        mes: "NOV",
+        hora: "17:00",
+        lugar: "Tabby Café",
+        ubicacion: "Xalapeños Ilustres #141 Col. Centro, Xalapa, Ver.",
+        precio: "Entrada gratuita"
     }
 ];
 

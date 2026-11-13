@@ -1164,3 +1164,565 @@ select.btn-presupuesto option {
         overflow-x: auto;
     }
 }
+
+
+/* ==========================================================
+   Estilos específicos para la página Nosotros (catedralBanner)
+   ================================================---------- */
+
+.nosotros-hero {
+    position: relative;
+    background: linear-gradient(rgba(13, 27, 42, 0.8), rgba(13, 27, 42, 0.8)), url('Icons/catedralBanner.jpg') center/cover no-repeat;
+    background-color: #0d1b2a;
+    color: white;
+    padding: 100px 20px 60px 10%;
+    text-align: left;
+}
+
+.nosotros-hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 600px;
+}
+
+.nosotros-hero h1 {
+    font-size: 55px;
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 10px;
+}
+
+.nosotros-hero p {
+    font-size: 18px;
+    color: #cbd5e1;
+    margin-bottom: 15px;
+}
+
+.linea-roja-nosotros {
+    width: 60px;
+    height: 4px;
+    background-color: #d90429;
+    border-radius: 2px;
+}
+
+/* Contenedor y secciones de la página Nosotros */
+.nosotros-main {
+    max-width: 1100px;
+    margin: 50px auto;
+    padding: 0 20px;
+}
+
+.quienes-somos, .filosofia-seccion {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    margin-bottom: 60px;
+    flex-wrap: wrap;
+}
+
+.quienes-somos-img, .filosofia-img {
+    flex: 1;
+    min-width: 300px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+}
+
+.quienes-somos-img img, .filosofia-img img {
+    width: 100%;
+    height: 320px;
+    object-fit: cover;
+    display: block;
+}
+
+.quienes-somos-texto, .filosofia-texto {
+    flex: 1.2;
+    min-width: 300px;
+}
+
+.quienes-somos-texto h2, .filosofia-texto h2 {
+    font-size: 28px;
+    color: #0d1b2a;
+    margin-bottom: 20px;
+}
+
+.quienes-somos-texto p, .filosofia-texto p {
+    font-size: 15px;
+    line-height: 1.7;
+    color: #555;
+    margin-bottom: 15px;
+}
+
+.destacado-borde {
+    border-left: 4px solid #d90429;
+    padding-left: 15px;
+    font-weight: 600;
+    color: #0d1b2a;
+    margin-top: 20px;
+}
+
+.mision-vision-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-bottom: 60px;
+}
+
+.tarjeta-mv {
+    background-color: #0d1b2a;
+    color: white;
+    padding: 35px 30px;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(13, 27, 42, 0.15);
+}
+
+.tarjeta-mv h3 {
+    font-size: 20px;
+    margin: 15px 0;
+}
+
+.tarjeta-mv p {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #cbd5e1;
+    margin-bottom: 12px;
+}
+
+@media (max-width: 768px) {
+    .nosotros-hero {
+        padding-left: 20px;
+        padding-right: 20px;
+        text-align: center;
+    }
+    .nosotros-hero h1 {
+        font-size: 40px;
+    }
+    .quienes-somos, .filosofia-seccion {
+        flex-direction: column;
+    }
+}
+
+/* ==========================================================
+   Estilos específicos para la página Nosotros
+   ================================================---------- */
+
+.nosotros-hero {
+    position: relative;
+    background: linear-gradient(rgba(13, 27, 42, 0.75), rgba(13, 27, 42, 0.75)), url('Icons/catedralBanner.jpg') center/cover no-repeat;
+    background-color: #0d1b2a;
+    color: white;
+    padding: 90px 20px 60px 10%;
+    text-align: left;
+}
+
+.nosotros-hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 600px;
+}
+
+.nosotros-hero h1 {
+    font-size: 50px;
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 8px;
+}
+
+.nosotros-hero p {
+    font-size: 18px;
+    color: #cbd5e1;
+    margin-bottom: 12px;
+}
+
+.linea-roja-nosotros {
+    width: 65px;
+    height: 4px;
+    background-color: #d90429;
+    border-radius: 2px;
+}
+
+/* Fondo blanco y estructura limpia para la sección de contenido */
+.nosotros-main {
+    background-color: #ffffff;
+    color: #1e293b;
+    padding: 60px 20px;
+}
+
+.nosotros-main-contenedor {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.quienes-somos, .filosofia-seccion {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    margin-bottom: 60px;
+    flex-wrap: wrap;
+}
+
+.quienes-somos-img, .filosofia-img {
+    flex: 1;
+    min-width: 300px;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+}
+
+.quienes-somos-img img, .filosofia-img img {
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+    display: block;
+}
+
+.quienes-somos-texto, .filosofia-texto {
+    flex: 1.2;
+    min-width: 300px;
+}
+
+.quienes-somos-texto h2, .filosofia-texto h2 {
+    font-size: 28px;
+    color: #0d1b2a;
+    margin-bottom: 20px;
+}
+
+.quienes-somos-texto p, .filosofia-texto p {
+    font-size: 15px;
+    line-height: 1.7;
+    color: #475569;
+    margin-bottom: 15px;
+}
+
+.destacado-borde {
+    border-left: 4px solid #d90429;
+    padding-left: 15px;
+    font-weight: 600;
+    color: #0d1b2a;
+    margin-top: 20px;
+}
+
+.mision-vision-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-bottom: 60px;
+}
+
+.tarjeta-mv {
+    background-color: #0d1b2a;
+    color: white;
+    padding: 35px 30px;
+    border-radius: 14px;
+    box-shadow: 0 10px 25px rgba(13, 27, 42, 0.15);
+}
+
+.tarjeta-mv h3 {
+    font-size: 20px;
+    margin: 15px 0;
+    color: white;
+}
+
+.tarjeta-mv p {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #cbd5e1;
+    margin-bottom: 12px;
+}
+
+@media (max-width: 768px) {
+    .nosotros-hero {
+        padding-left: 20px;
+        padding-right: 20px;
+        text-align: center;
+    }
+    .nosotros-hero h1 {
+        font-size: 38px;
+    }
+    .quienes-somos, .filosofia-seccion {
+        flex-direction: column;
+    }
+}
+
+/* ==========================================================
+   Ajustes para la página Nosotros (Sin espacios oscuros)
+   ================================================---------- */
+
+.nosotros-hero {
+    position: relative;
+    background: linear-gradient(rgba(13, 27, 42, 0.75), rgba(13, 27, 42, 0.75)), url('Icons/catedralBanner.jpg') center/cover no-repeat;
+    background-color: #0d1b2a;
+    color: white;
+    padding: 100px 20px 70px 10%;
+    text-align: left;
+    margin-bottom: 0;
+}
+
+.nosotros-hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 600px;
+}
+
+.nosotros-hero h1 {
+    font-size: 50px;
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 8px;
+}
+
+.nosotros-hero p {
+    font-size: 18px;
+    color: #cbd5e1;
+    margin-bottom: 12px;
+}
+
+.linea-roja-nosotros {
+    width: 65px;
+    height: 4px;
+    background-color: #d90429;
+    border-radius: 2px;
+}
+
+/* Contenedor principal con fondo blanco pegado al hero */
+.nosotros-main {
+    background-color: #ffffff;
+    color: #1e293b;
+    padding: 50px 20px 80px;
+    margin-top: 0;
+}
+
+.nosotros-main-contenedor {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.quienes-somos, .filosofia-seccion {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    margin-bottom: 60px;
+    flex-wrap: wrap;
+}
+
+.quienes-somos-img, .filosofia-img {
+    flex: 1;
+    min-width: 300px;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+}
+
+.quienes-somos-img img, .filosofia-img img {
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+    display: block;
+}
+
+.quienes-somos-texto, .filosofia-texto {
+    flex: 1.2;
+    min-width: 300px;
+}
+
+.quienes-somos-texto h2, .filosofia-texto h2 {
+    font-size: 28px;
+    color: #0d1b2a;
+    margin-bottom: 20px;
+}
+
+.quienes-somos-texto p, .filosofia-texto p {
+    font-size: 15px;
+    line-height: 1.7;
+    color: #475569;
+    margin-bottom: 15px;
+}
+
+.destacado-borde {
+    border-left: 4px solid #d90429;
+    padding-left: 15px;
+    font-weight: 600;
+    color: #0d1b2a;
+    margin-top: 20px;
+}
+
+.mision-vision-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-bottom: 60px;
+}
+
+.tarjeta-mv {
+    background-color: #0d1b2a;
+    color: white;
+    padding: 35px 30px;
+    border-radius: 14px;
+    box-shadow: 0 10px 25px rgba(13, 27, 42, 0.15);
+}
+
+.tarjeta-mv h3 {
+    font-size: 20px;
+    margin: 15px 0;
+    color: white;
+}
+
+.tarjeta-mv p {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #cbd5e1;
+    margin-bottom: 12px;
+}
+
+@media (max-width: 768px) {
+    .nosotros-hero {
+        padding-left: 20px;
+        padding-right: 20px;
+        text-align: center;
+    }
+    .nosotros-hero h1 {
+        font-size: 38px;
+    }
+    .quienes-somos, .filosofia-seccion {
+        flex-direction: column;
+    }
+}
+
+
+/* ==========================================================
+   Ajustes de iconos e imágenes en Misión, Visión y Filosofía
+   ================================================---------- */
+
+/* Contenedor y tamaño para las imágenes de Misión y Visión */
+.icono-mv-img {
+    width: 65px;
+    height: 65px;
+    object-fit: contain;
+    margin-bottom: 5px;
+}
+
+/* Estilo para la tarjeta de Filosofía (con texto a la izquierda e imagen a la derecha) */
+.filosofia-seccion {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    background: #f8fafc;
+    padding: 40px;
+    border-radius: 14px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.05);
+    margin-bottom: 60px;
+    flex-wrap: wrap;
+}
+
+.filosofia-texto {
+    flex: 1.2;
+    min-width: 300px;
+}
+
+.filosofia-img {
+    flex: 1;
+    min-width: 300px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+}
+
+.filosofia-img img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    display: block;
+}
+
+@media (max-width: 768px) {
+    .filosofia-seccion {
+        flex-direction: column;
+    }
+}
+
+
+
+/* ==========================================================
+   Estilos para los botones de Instagram (Hero y Eventos)
+   ================================================---------- */
+
+.ig-badge-container {
+    display: inline-flex;
+    align-items: center;
+    background: #0d1b2a;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 35px;
+    padding: 6px 18px 6px 8px;
+    text-decoration: none;
+    color: white;
+    gap: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    transition: transform 0.3s ease, background 0.3s ease;
+    margin-top: 15px;
+}
+
+.ig-badge-container:hover {
+    transform: translateY(-2px);
+    background: #172b40;
+    border-color: #d90429;
+}
+
+.ig-logo-img {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+    display: block;
+}
+
+.ig-badge-texto {
+    display: flex;
+    flex-direction: column;
+}
+
+.ig-badge-texto strong {
+    font-size: 14px;
+    font-weight: 600;
+    color: white;
+    letter-spacing: 0.3px;
+}
+
+.ig-badge-texto small {
+    font-size: 11px;
+    color: #cbd5e1;
+}
+
+/* Contenedor específico para la parte inferior de eventos */
+.instagram-footer-seccion {
+    background-color: #091523;
+    padding: 40px 20px;
+    text-align: left;
+    max-width: 1200px;
+    margin: 40px auto;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+}
+
+.instagram-footer-info h3 {
+    color: white;
+    font-size: 24px;
+    margin-bottom: 5px;
+}
+
+.instagram-footer-info p {
+    color: #cbd5e1;
+    font-size: 14px;
+    margin: 0;
+}
+
+@media (max-width: 768px) {
+    .instagram-footer-seccion {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 30px 20px;
+    }
+}
