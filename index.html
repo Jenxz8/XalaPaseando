@@ -5,39 +5,115 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>XalaPaseando</title>
     
-    
     <link rel="icon" type="image/png" href="Icons/Icono.png">
-    
-    
     <link rel="stylesheet" href="style.css">
-    
-    
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
 
 <style> 
-.seccion-eventos-inicio { background: #0d1b2a; color: white; padding: 52px 0 62px; overflow: hidden; }
-.encabezado-eventos-inicio { max-width: 1200px; margin: 0 auto 26px; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; gap: 20px; }
-.encabezado-eventos-inicio h2 { color: white; font-size: 28px; margin-bottom: 8px; }
-.encabezado-eventos-inicio p { color: #cbd5e1; font-size: 14px; }
-.ver-eventos-inicio { color: #ff6070; text-decoration: none; font-size: 14px; font-weight: 600; white-space: nowrap; }
+/* Banner principal pegado totalmente hasta arriba de la pantalla */
+.hero {
+    min-height: 380px !important;
+    height: auto !important;
+    margin-top: 0 !important; /* Cero margen para que suba hasta el borde superior */
+    padding: 90px 0 45px !important; /* Padding superior generoso para que el texto baje y respire del logo */
+    background-position: center center !important;
+    display: flex;
+    align-items: center;
+}
+.hero:after {
+    display: none !important;
+}
+.hero-inner {
+    width: min(1200px, 92%);
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+    padding-left: 35px;
+}
+.hero-content {
+    max-width: 600px;
+}
+
+/* Sección de eventos más compacta y pegada */
+.seccion-eventos-inicio { background: #0d1b2a; color: white; padding: 30px 0 20px; overflow: hidden; }
+.encabezado-eventos-inicio { max-width: 1200px; margin: 0 auto 15px; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; gap: 20px; }
+.encabezado-eventos-inicio h2 { color: white; font-size: 24px; margin-bottom: 4px; }
+.encabezado-eventos-inicio p { color: #cbd5e1; font-size: 13px; }
+.ver-eventos-inicio { color: #ff6070; text-decoration: none; font-size: 13px; font-weight: 600; white-space: nowrap; }
+
+/* Tarjetas de eventos más pequeñas */
 .carrusel-eventos-inicio { overflow-x: auto; width: 100%; scrollbar-width: thin; }
-.pista-eventos-inicio { display: flex; gap: 20px; width: max-content; padding: 4px 20px 12px; animation: deslizar-carteles 75s linear infinite; }
-.tarjeta-imagen-evento { display: block; flex: 0 0 250px; width: 250px; overflow: hidden; border-radius: 14px; background: #172b40; text-decoration: none; color: white; box-shadow: 0 4px 15px rgba(0,0,0,.18); }
-.tarjeta-imagen-evento img { display: block; width: 100%; height: 300px; object-fit: contain; background: #091523; }
-.info-evento-inicio { padding: 14px 15px 18px; }
-.info-evento-inicio h3 { color: white; margin: 0 0 8px; font-size: 15px; line-height: 1.35; min-height: 40px; }
-.info-evento-inicio p { color: #cbd5e1; margin: 0 0 10px; font-size: 12px; }
-.precio-inicio { color: #ffcf33; font-size: 13px; font-weight: 700; }
+.pista-eventos-inicio { display: flex; gap: 15px; width: max-content; padding: 4px 20px 8px; animation: deslizar-carteles 75s linear infinite; }
+.tarjeta-imagen-evento { display: block; flex: 0 0 200px; width: 200px; overflow: hidden; border-radius: 12px; background: #172b40; text-decoration: none; color: white; box-shadow: 0 4px 12px rgba(0,0,0,.18); }
+.tarjeta-imagen-evento img { display: block; width: 100%; height: 220px; object-fit: contain; background: #091523; }
+.info-evento-inicio { padding: 10px 12px 14px; }
+.info-evento-inicio h3 { color: white; margin: 0 0 6px; font-size: 13px; line-height: 1.3; min-height: 32px; }
+.info-evento-inicio p { color: #cbd5e1; margin: 0 0 6px; font-size: 11px; }
+.precio-inicio { color: #ffcf33; font-size: 12px; font-weight: 700; }
 .carrusel-eventos-inicio:hover .pista-eventos-inicio, .carrusel-eventos-inicio:focus-within .pista-eventos-inicio { animation-play-state: paused; }
 @keyframes deslizar-carteles { from { transform: translateX(0); } to { transform: translateX(calc(-50% - 10px)); } }
-@media(max-width:768px) { .encabezado-eventos-inicio { align-items: flex-start; flex-direction: column; } .encabezado-eventos-inicio h2 { font-size: 23px; } .tarjeta-imagen-evento { flex-basis: 220px; width: 220px; } .tarjeta-imagen-evento img { height: 260px; } .pista-eventos-inicio { animation-duration: 90s; } }
-@media(prefers-reduced-motion: reduce) { .pista-eventos-inicio { animation: none; } }
-.etiqueta-halloween-inicio { display: inline-block; background: #a446d1; color: white; font-size: 11px; font-weight: 700; border-radius: 12px; padding: 4px 9px; margin-bottom: 8px; }
+.etiqueta-halloween-inicio { display: inline-block; background: #a446d1; color: white; font-size: 10px; font-weight: 700; border-radius: 10px; padding: 2px 7px; margin-bottom: 6px; }
+
+/* Contenedor principal de la sección inferior (Imagen jaca_font a la izquierda, Boletín compacto a la derecha) */
+.seccion-inferior-layout {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+/* Imagen decorativa de la izquierda (jaca_font) */
+.imagen-lateral-jaca {
+    flex: 1;
+    max-width: 450px;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+.imagen-lateral-jaca img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+}
+
+/* Boletín más pequeño a la derecha */
+.signup-container { 
+    flex: 1;
+    max-width: 550px;
+}
+.signup { background: rgba(255, 255, 255, .98); border-radius: 20px; padding: 25px 30px; box-shadow: 0 12px 40px rgba(16, 31, 52, .13); text-align: center; color: #13243b; position: relative; }
+.mail-icon { width: 50px; height: 50px; border-radius: 50%; background: #0c1d32; color: white; display: grid; place-items: center; font-size: 22px; margin: -50px auto 12px; border: 5px solid #f7f6f2; }
+.signup h2 { font: 700 22px/1.2 Georgia, serif; margin: 0 0 6px; color: #0c1d32; }
+.signup .sub { color: #63718a; margin: 0 0 18px; font-size: 13px; }
+.signup form { text-align: left; }
+.field { display: flex; align-items: center; gap: 10px; border: 1px solid #c8ced8; border-radius: 10px; padding: 0 14px; margin: 10px 0; background: #fff; min-height: 45px; }
+.field span { font-size: 16px; color: #0c1d32; }
+.field input { width: 100%; border: 0; outline: 0; font: inherit; font-size: 13px; color: #13243b; background: transparent; }
+.submit { width: 100%; min-height: 45px; border-radius: 10px; background: #df1235; color: #fff; margin-top: 5px; border: 0; cursor: pointer; font: 700 14px inherit; transition: background .15s; }
+.submit:hover { background: #c90e2d; }
+.consent { display: flex; align-items: flex-start; gap: 8px; color: #526078; font-size: 11px; line-height: 1.4; margin: 12px 2px 0; }
+.consent input { accent-color: #df1235; width: 14px; height: 14px; flex: none; margin-top: 1px; }
+
+/* Responsivo para celulares */
+@media(max-width: 900px) {
+    .seccion-inferior-layout {
+        flex-direction: column;
+    }
+    .imagen-lateral-jaca {
+        max-width: 100%;
+    }
+    .signup-container {
+        max-width: 100%;
+    }
+}
 </style>
 </head>
 <body>
 
-    
+    <!-- Navegación superior -->
     <nav class="navbar">
         <div class="logo">
             <span class="logo-text">
@@ -59,130 +135,150 @@
         </div>
     </nav>
 
-    
+    <!-- Banner Principal (Hero con la imagen pegada hasta arriba de la página) -->
     <header class="hero">
-        
         <div class="overlay"></div>
-        
-        <div class="hero-content">
-            <h1 class="animate-fade-up">
-                <span class="title-main">Xalapa</span><br>
-                <span class="title-cursive">tiene mucho<br>que ofrecer</span>
-            </h1>
-            <p class="animate-fade-up delay-1">
-                Descubre los mejores planes, lugares y experiencias para disfrutar la ciudad, si eres de aquí o vienes de visita.
-            </p>
-            <a href="https://www.instagram.com/xalapaseando?utm_source=qr" target="_blank" class="ig-badge-container animate-fade-up delay-2">
-                <img src="Icons/iglogo.png" alt="Instagram" class="ig-logo-img">
-                <div class="ig-badge-texto">
-                    <strong>@xalapaseando</strong>
-                    <small>Síguenos en Instagram</small>
-                </div>
-            </a>
-        
-        </div>
-
-        
-       
-    </header>
-    
-
-
-<section class="seccion-eventos-inicio">
-
-    <div class="encabezado-eventos-inicio">
-        <div>
-            <h2>Próximos eventos en Xalapa</h2>
-            <p>Descubre los mejores planes y actividades de la ciudad.</p>
-        </div>
-
-        <a href="eventos.html" class="ver-eventos-inicio">
-            Ver todos los eventos →
-        </a>
-    </div>
-
-    <div class="carrusel-eventos-inicio">
-        <div class="pista-eventos-inicio" id="eventos-inicio">
-            
-        </div>
-    </div>
-
-    <div style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
-    <div class="instagram-footer-seccion">
-        <div class="instagram-footer-info">
-            <h3>¡Síguenos en Instagram!</h3>
-            <p>Descubre planes y lugares para pasear en Xalapa.</p>
-        </div>
-        <a href="https://www.instagram.com/xalapaseando?utm_source=qr" target="_blank" class="ig-badge-container" style="background: #d90429; border-color: transparent;">
-            <img src="Icons/iglogo.png" alt="Instagram" class="ig-logo-img">
-            <div class="ig-badge-texto">
-                <strong style="color: white;">@xalapaseando</strong>
-                <small style="color: #ffe6e8;">Ver perfil</small>
+        <div class="hero-inner">
+            <div class="hero-content">
+                <h1 class="animate-fade-up">
+                    <span class="title-main">Xalapa</span><br>
+                    <span class="title-cursive">tiene mucho<br>que ofrecer</span>
+                </h1>
+                <p class="animate-fade-up delay-1">
+                    Descubre los mejores planes, lugares y experiencias para disfrutar la ciudad, si eres de aquí o vienes de visita.
+                </p>
+                <a href="https://www.instagram.com/xalapaseando?utm_source=qr" target="_blank" class="ig-badge-container animate-fade-up delay-2">
+                    <img src="Icons/iglogo.png" alt="Instagram" class="ig-logo-img">
+                    <div class="ig-badge-texto">
+                        <strong>@xalapaseando</strong>
+                        <small>Síguenos en Instagram</small>
+                    </div>
+                </a>
             </div>
-        </a>
+        </div>
+    </header>
+
+    <!-- Sección de Próximos Eventos -->
+    <section class="seccion-eventos-inicio">
+        <div class="encabezado-eventos-inicio">
+            <div>
+                <h2>Próximos eventos en Xalapa</h2>
+                <p>Descubre los mejores planes y actividades de la ciudad.</p>
+            </div>
+            <a href="eventos.html" class="ver-eventos-inicio">
+                Ver todos los eventos →
+            </a>
+        </div>
+
+        <div class="carrusel-eventos-inicio">
+            <div class="pista-eventos-inicio" id="eventos-inicio"></div>
+        </div>
+    </section>
+
+    <!-- Sección Inferior: Imagen jaca_font a la izquierda y Boletín compacto a la derecha -->
+    <div class="seccion-inferior-layout">
+        
+        <!-- Imagen lateral izquierda -->
+        <div class="imagen-lateral-jaca">
+            <img src="Icons/jaca_font.png" alt="Jacarandas y Xalapa" loading="lazy">
+        </div>
+
+        <!-- Boletín de suscripción más pequeño a la derecha -->
+        <div class="signup-container">
+            <section class="signup" id="suscripcion">
+                <div class="mail-icon" aria-hidden="true">✉</div>
+                <h2>Suscríbete a nuestro boletín</h2>
+                <p class="sub">Sé parte de la comunidad que descubre y vive Xalapa.</p>
+                <form id="signupForm" action="https://formspree.io/f/mdegawyv" method="POST">
+                    <label class="field"><span aria-hidden="true">👤</span>
+                        <input type="text" name="nombre" placeholder="Nombre completo" autocomplete="name" required>
+                    </label>
+                    <label class="field"><span aria-hidden="true">✉</span>
+                        <input type="email" name="email" placeholder="Correo electrónico" autocomplete="email" required>
+                    </label>
+                    <button class="submit" type="submit">Suscribirme&nbsp;&nbsp; →</button>
+                    <label class="consent">
+                        <input type="checkbox" name="consentimiento" required>
+                        <span>Acepto recibir información y recomendaciones de XalaPaseando.</span>
+                    </label>
+                </form>
+            </section>
+        </div>
+
     </div>
-</div>
 
-</section>
+    <!-- Bloque inferior de Instagram -->
+    <div style="background-color: #0d1b2a; padding: 10px 20px 30px;">
+        <div style="max-width: 1200px; margin: 0 auto;">
+            <div class="instagram-footer-seccion">
+                <div class="instagram-footer-info">
+                    <h3>¡Síguenos en Instagram!</h3>
+                    <p>Descubre planes y lugares para pasear en Xalapa.</p>
+                </div>
+                <a href="https://www.instagram.com/xalapaseando?utm_source=qr" target="_blank" class="ig-badge-container" style="background: #d90429; border-color: transparent;">
+                    <img src="Icons/iglogo.png" alt="Instagram" class="ig-logo-img">
+                    <div class="ig-badge-texto">
+                        <strong style="color: white;">@xalapaseando</strong>
+                        <small style="color: #ffe6e8;">Ver perfil</small>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
 
+    <!-- Scripts necesarios -->
+    <script src="datos-eventos.js"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const contenedor = document.getElementById("eventos-inicio");
+        if (!contenedor) return;
+        if (typeof eventosXalapa === "undefined" || !Array.isArray(eventosXalapa)) return;
 
-<script src="datos-eventos.js"></script>
+        contenedor.replaceChildren();
 
-<script>document.addEventListener("DOMContentLoaded", () => {
-    const contenedor = document.getElementById("eventos-inicio");
-    if (!contenedor) return;
-    if (typeof eventosXalapa === "undefined" || !Array.isArray(eventosXalapa)) {
-        contenedor.textContent = "No se pudo cargar datos-eventos.js. Revisa que esté en la misma carpeta que index.html.";
-        console.error("Falta datos-eventos.js o el arreglo eventosXalapa.");
-        return;
-    }
+        function crearTarjeta(evento, esDuplicado = false) {
+            const enlace = document.createElement("a");
+            enlace.className = "tarjeta-imagen-evento";
+            enlace.href = "evento-detalle.html?id=" + encodeURIComponent(evento.id);
+            if (esDuplicado) {
+                enlace.setAttribute("aria-hidden", "true");
+                enlace.tabIndex = -1;
+            }
 
-    contenedor.replaceChildren();
+            const imagen = document.createElement("img");
+            imagen.src = evento.imagen;
+            imagen.alt = "Cartel de " + evento.nombre;
+            imagen.loading = "lazy";
 
-    function crearTarjeta(evento, esDuplicado = false) {
-        const enlace = document.createElement("a");
-        enlace.className = "tarjeta-imagen-evento";
-        enlace.href = "evento-detalle.html?id=" + encodeURIComponent(evento.id);
-        if (esDuplicado) {
-            enlace.setAttribute("aria-hidden", "true");
-            enlace.tabIndex = -1;
+            const info = document.createElement("div");
+            info.className = "info-evento-inicio";
+            const titulo = document.createElement("h3");
+            titulo.textContent = evento.nombre;
+            const fecha = document.createElement("p");
+            fecha.textContent = evento.dia + " " + evento.mes + " · " + evento.hora + " hrs";
+            const precio = document.createElement("span");
+            precio.className = "precio-inicio";
+            precio.textContent = evento.precio;
+            if (evento.etiquetas?.includes("Halloween")) {
+                const etiqueta = document.createElement("span");
+                etiqueta.className = "etiqueta-halloween-inicio";
+                etiqueta.textContent = "Halloween";
+                info.appendChild(etiqueta);
+            }
+            info.append(titulo, fecha, precio);
+            enlace.append(imagen, info);
+            return enlace;
         }
 
-        const imagen = document.createElement("img");
-        imagen.src = evento.imagen;
-        imagen.alt = "Cartel de " + evento.nombre;
-        imagen.loading = "lazy";
-
-        const info = document.createElement("div");
-        info.className = "info-evento-inicio";
-        const titulo = document.createElement("h3");
-        titulo.textContent = evento.nombre;
-        const fecha = document.createElement("p");
-        fecha.textContent = evento.dia + " " + evento.mes + " · " + evento.hora + " hrs";
-        const precio = document.createElement("span");
-        precio.className = "precio-inicio";
-        precio.textContent = evento.precio;
-        if (evento.etiquetas?.includes("Halloween")) {
-            const etiqueta = document.createElement("span");
-            etiqueta.className = "etiqueta-halloween-inicio";
-            etiqueta.textContent = "Halloween";
-            info.appendChild(etiqueta);
+        eventosXalapa.forEach(evento => contenedor.appendChild(crearTarjeta(evento)));
+         
+        if (eventosXalapa.length > 1) {
+            eventosXalapa.forEach(evento => contenedor.appendChild(crearTarjeta(evento, true)));
+        } else {
+            contenedor.style.animation = "none";
         }
-        info.append(titulo, fecha, precio);
-        enlace.append(imagen, info);
-        return enlace;
-    }
-
-    eventosXalapa.forEach(evento => contenedor.appendChild(crearTarjeta(evento)));
-     
-    if (eventosXalapa.length > 1) {
-        eventosXalapa.forEach(evento => contenedor.appendChild(crearTarjeta(evento, true)));
-    } else {
-        contenedor.style.animation = "none";
-    }
-});
-</script>
-<script src="navegacion.js"></script>
-
+    });
+    </script>
+    <script src="navegacion.js"></script>
 </body>
 </html>
