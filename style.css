@@ -1726,3 +1726,24 @@ select.btn-presupuesto option {
         padding: 30px 20px;
     }
 }
+
+/* Logo de imagen XalaPaseando */
+.navbar .logo .logo-nuevo {
+    width: 220px;
+    height: auto;
+    max-height: 64px;
+    object-fit: contain;
+    display: block;
+}
+@media (max-width: 768px) {
+    .navbar .logo .logo-nuevo {
+        width: 160px;
+        max-height: 48px;
+    }
+}
+@media (max-width: 380px) {
+    .navbar .logo .logo-nuevo {
+        width: 125px;
+        max-height: 40px;
+    }
+}
