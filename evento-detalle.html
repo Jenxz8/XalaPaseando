@@ -139,7 +139,7 @@
         (evento.etiquetas?.includes("Halloween") ? "Halloween · " : "") + evento.categoria;
 
     document.getElementById("detalle-descripcion-corta").textContent =
-        evento.lugar + " · " + evento.hora + " hrs";
+        evento.lugar + " · " + horarioEvento(evento);
 
     document.getElementById("detalle-descripcion").textContent =
         evento.descripcion;
@@ -151,8 +151,7 @@
         "Cartel de " + evento.nombre;
 
     document.getElementById("detalle-fecha").textContent =
-        fechaEventoLarga(evento) + " · " +
-        evento.hora + " hrs";
+        fechaVisible(evento) + " · " + horarioEvento(evento);
 
     document.getElementById("detalle-lugar").textContent =
         evento.lugar + ", " + evento.ubicacion;
@@ -177,12 +176,12 @@
 
     const estado = document.getElementById("detalle-estado");
 
-    if (evento.fecha < fechaActual) {
+    if (esPasado(evento)) {
         estado.textContent = "Fecha del evento pasada";
-    } else if (evento.fecha === fechaActual) {
+    } else if (evento.fecha === hoyXalapa()) {
         estado.textContent = "Programado para hoy";
     } else {
-        estado.textContent = "Próximo evento";
+        estado.textContent = evento.fecha < hoyXalapa() ? "Evento en curso o con próximas funciones" : "Próximo evento";
     }
 });
 </script>

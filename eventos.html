@@ -84,6 +84,10 @@
             color: #0d1b2a;
             margin-bottom: 20px;
         }
+        .modo-eventos { display:flex; justify-content:center; margin: 0 0 24px; }
+        .modo-eventos button { background:#d90429; color:white; border:0; border-radius:25px; padding:12px 24px; font:600 14px Montserrat,sans-serif; cursor:pointer; }
+        .titulo-lista { color:#0d1b2a; margin: 20px 0; }
+        #lista-eventos { grid-template-columns:repeat(auto-fill,minmax(min(250px,100%),1fr)); }
     </style>
 </head>
 <body class="tema-claro">
@@ -108,7 +112,7 @@
 
     <main class="contenedor-explora">
         <div class="encabezado-seccion" style="text-align: center; margin-bottom: 10px;">
-            <h2 class="titulo-azul">Próximos Eventos en Xalapa</h2>
+            <h2 class="titulo-azul">Eventos en Xalapa</h2>
             <p class="subtitulo">Descubre todo lo que la ciudad tiene para ti esta temporada.</p>
         </div>
 
@@ -131,7 +135,9 @@
             </div>
         </div>
 
-        <div class="contador-eventos" id="contador-texto"></div>
+        <div class="modo-eventos"><button type="button" id="btn-pasados" aria-pressed="false">Ver eventos pasados</button></div>
+        <h2 class="titulo-lista" id="titulo-lista">Eventos vigentes y próximos</h2>
+        <div class="contador-eventos" id="contador-texto" aria-live="polite"></div>
 
         <!-- Cuadrícula de Eventos -->
         <section class="grid-tarjetas" id="lista-eventos"></section>
@@ -149,11 +155,20 @@
 
         let filtroActual = "todos";
         let textoBusqueda = "";
+        let mostrarPasados = false;
+        const btnPasados = document.getElementById("btn-pasados");
+        btnPasados.addEventListener("click", () => {
+            mostrarPasados = !mostrarPasados;
+            btnPasados.textContent = mostrarPasados ? "Ver eventos vigentes" : "Ver eventos pasados";
+            btnPasados.setAttribute("aria-pressed", String(mostrarPasados));
+            document.getElementById("titulo-lista").textContent = mostrarPasados ? "Eventos pasados" : "Eventos vigentes y próximos";
+            renderizarEventos();
+        });
 
         function renderizarEventos() {
-            contenedor.innerHTML = "";
+            contenedor.replaceChildren();
 
-            const eventosFiltrados = eventosXalapa.filter(evento => {
+            const eventosFiltrados = (mostrarPasados ? anterioresEventos() : proximosEventos()).filter(evento => {
                 const coincideTexto = (evento.nombre + " " + evento.descripcion + " " + evento.lugar + " " + evento.categoria)
                     .toLowerCase()
                     .includes(textoBusqueda.toLowerCase());
@@ -161,10 +176,10 @@
                 if (!coincideTexto) return false;
 
                 if (filtroActual === "todos") return true;
-                if (filtroActual === "gratis") return evento.precio.toLowerCase().includes("gratis") || evento.precio.toLowerCase().includes("libre");
-                if (filtroActual === "pago") return !evento.precio.toLowerCase().includes("gratis") && !evento.precio.toLowerCase().includes("libre");
+                if (filtroActual === "gratis") return evento.precio.toLowerCase().includes("gratis") || evento.precio.toLowerCase().includes("libre") || evento.precio.toLowerCase().includes("gratuita");
+                if (filtroActual === "pago") return /\$|donación/i.test(evento.precio) && !/gratis|libre|gratuita/i.test(evento.precio);
                 
-                return evento.categoria.toLowerCase() === filtroActual.toLowerCase();
+                return evento.categoria.toLowerCase() === filtroActual.toLowerCase() || (filtroActual === "Arte" && evento.categoria === "Exposición");
             });
 
             contadorTexto.textContent = `${eventosFiltrados.length} eventos encontrados`;
@@ -191,13 +206,13 @@
                         </div>
                         <div class="tarjeta-cuerpo">
                             <span class="etiqueta roja">
-                                ${evento.etiquetas?.includes("Halloween") ? "Halloween · " : ""}${evento.categoria}
+                                ${!mostrarPasados && evento.destacado ? "★ Destacado · " : ""}${evento.etiquetas?.includes("Halloween") ? "Halloween · " : ""}${evento.categoria}
                             </span>
                             <h3>${evento.nombre}</h3>
-                            <p>${evento.descripcion}</p>
+                            <p>${fechaVisible(evento)}</p><p>${evento.descripcion}</p>
                             <div class="tarjeta-pie mt-10">
                                 <span>📍 ${evento.lugar}</span>
-                                <span>${evento.hora} hrs</span>
+                                <span>${horarioEvento(evento)}</span>
                             </div>
                         </div>
                     </article>

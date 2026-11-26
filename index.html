@@ -42,8 +42,8 @@
 .ver-eventos-inicio { color: #ff6070; text-decoration: none; font-size: 13px; font-weight: 600; white-space: nowrap; }
 
 /* Tarjetas de eventos más pequeñas */
-.carrusel-eventos-inicio { overflow-x: auto; width: 100%; scrollbar-width: thin; }
-.pista-eventos-inicio { display: flex; gap: 15px; width: max-content; padding: 4px 20px 8px; animation: deslizar-carteles 75s linear infinite; }
+.carrusel-eventos-inicio { overflow: hidden; width: 100%; max-width: 100vw; }
+.pista-eventos-inicio { display: flex; gap: 0; width: max-content; max-width: none; padding: 4px 0 8px; animation: deslizar-carteles var(--duracion, 75s) linear infinite; }
 .tarjeta-imagen-evento { display: block; flex: 0 0 200px; width: 200px; overflow: hidden; border-radius: 12px; background: #172b40; text-decoration: none; color: white; box-shadow: 0 4px 12px rgba(0,0,0,.18); }
 .tarjeta-imagen-evento img { display: block; width: 100%; height: 220px; object-fit: contain; background: #091523; }
 .info-evento-inicio { padding: 10px 12px 14px; }
@@ -51,7 +51,15 @@
 .info-evento-inicio p { color: #cbd5e1; margin: 0 0 6px; font-size: 11px; }
 .precio-inicio { color: #ffcf33; font-size: 12px; font-weight: 700; }
 .carrusel-eventos-inicio:hover .pista-eventos-inicio, .carrusel-eventos-inicio:focus-within .pista-eventos-inicio { animation-play-state: paused; }
-@keyframes deslizar-carteles { from { transform: translateX(0); } to { transform: translateX(calc(-50% - 10px)); } }
+@keyframes deslizar-carteles { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+.grupo-carrusel { display: flex; flex: none; gap: 15px; padding-right: 15px; }
+html, body { max-width: 100%; overflow-x: hidden; }
+@media (prefers-reduced-motion: reduce) {
+  .pista-eventos-inicio { animation: none; }
+  .carrusel-eventos-inicio { overflow-x: auto; }
+  .grupo-carrusel[aria-hidden="true"] { display: none; }
+}
+@media (max-width: 600px) { .encabezado-eventos-inicio { flex-wrap: wrap; gap: 8px; } }
 .etiqueta-halloween-inicio { display: inline-block; background: #a446d1; color: white; font-size: 10px; font-weight: 700; border-radius: 10px; padding: 2px 7px; margin-bottom: 6px; }
 
 /* Contenedor principal de la sección inferior (Imagen jaca_font a la izquierda, Boletín compacto a la derecha) */
@@ -155,6 +163,7 @@
         </div>
     </header>
 
+
     <!-- Sección de Próximos Eventos -->
     <section class="seccion-eventos-inicio">
         <div class="encabezado-eventos-inicio">
@@ -171,6 +180,7 @@
             <div class="pista-eventos-inicio" id="eventos-inicio"></div>
         </div>
     </section>
+
 
     <!-- Sección Inferior: Imagen jaca_font a la izquierda y Boletín compacto a la derecha -->
     <div class="seccion-inferior-layout">
@@ -245,21 +255,21 @@
             const imagen = document.createElement("img");
             imagen.src = evento.imagen;
             imagen.alt = "Cartel de " + evento.nombre;
-            imagen.loading = "lazy";
+            imagen.loading = "eager";
 
             const info = document.createElement("div");
             info.className = "info-evento-inicio";
             const titulo = document.createElement("h3");
             titulo.textContent = evento.nombre;
             const fecha = document.createElement("p");
-            fecha.textContent = evento.dia + " " + evento.mes + " · " + evento.hora + " hrs";
+            fecha.textContent = fechaVisible(evento) + " · " + horarioEvento(evento);
             const precio = document.createElement("span");
             precio.className = "precio-inicio";
             precio.textContent = evento.precio;
-            if (evento.etiquetas?.includes("Halloween")) {
+            if (evento.destacado || evento.etiquetas?.includes("Halloween")) {
                 const etiqueta = document.createElement("span");
                 etiqueta.className = "etiqueta-halloween-inicio";
-                etiqueta.textContent = "Halloween";
+                etiqueta.textContent = evento.destacado ? "★ Destacado" : "Halloween";
                 info.appendChild(etiqueta);
             }
             info.append(titulo, fecha, precio);
@@ -267,13 +277,36 @@
             return enlace;
         }
 
-        eventosXalapa.forEach(evento => contenedor.appendChild(crearTarjeta(evento)));
-         
-        if (eventosXalapa.length > 1) {
-            eventosXalapa.forEach(evento => contenedor.appendChild(crearTarjeta(evento, true)));
-        } else {
+        const vigentes = proximosEventos();
+        const eventos = [...vigentes.filter(e => e.destacado), ...vigentes.filter(e => !e.destacado)].slice(0, 10);
+        if (!eventos.length) {
+            contenedor.textContent = "No hay próximos eventos disponibles.";
             contenedor.style.animation = "none";
+            return;
         }
+        const grupo = document.createElement("div");
+        grupo.className = "grupo-carrusel";
+        const copia = document.createElement("div");
+        copia.className = "grupo-carrusel";
+        copia.setAttribute("aria-hidden", "true");
+        const ajustar = () => {
+            grupo.replaceChildren(); copia.replaceChildren();
+            const ancho = contenedor.parentElement.clientWidth;
+            const repeticiones = Math.max(1, Math.ceil(ancho / (eventos.length * 215)));
+            for (let i = 0; i < repeticiones; i++) {
+                eventos.forEach(e => {
+                    grupo.appendChild(crearTarjeta(e, i > 0));
+                    copia.appendChild(crearTarjeta(e, true));
+                });
+            }
+            contenedor.style.setProperty("--duracion", (grupo.scrollWidth / 28) + "s");
+        };
+        contenedor.append(grupo, copia);
+        ajustar();
+        let anchoAnterior = window.innerWidth;
+        window.addEventListener("resize", () => {
+            if (window.innerWidth !== anchoAnterior) { anchoAnterior = window.innerWidth; ajustar(); }
+        });
     });
     </script>
     <script src="navegacion.js"></script>
