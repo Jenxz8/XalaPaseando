@@ -125,6 +125,7 @@
 
             <div class="botones-filtros-grid" id="contenedor-filtros">
                 <button class="filtro-chip activo" data-filtro="todos">Ver todas</button>
+                <button class="filtro-chip" data-filtro="destacados">★ Destacados</button>
                 <button class="filtro-chip" data-filtro="gratis">🎁 Gratis</button>
                 <button class="filtro-chip" data-filtro="pago">💳 De pago</button>
                 <button class="filtro-chip" data-filtro="Taller">✏️ Taller</button>
@@ -153,7 +154,9 @@
         const botonesFiltros = document.querySelectorAll(".filtro-chip");
         const contadorTexto = document.getElementById("contador-texto");
 
-        let filtroActual = "todos";
+        const filtroURL = new URLSearchParams(location.search).get("filtro");
+        let filtroActual = ["gratis", "destacados"].includes(filtroURL) ? filtroURL : "todos";
+        botonesFiltros.forEach(b => b.classList.toggle("activo", b.dataset.filtro === filtroActual));
         let textoBusqueda = "";
         let mostrarPasados = false;
         const btnPasados = document.getElementById("btn-pasados");
@@ -176,6 +179,7 @@
                 if (!coincideTexto) return false;
 
                 if (filtroActual === "todos") return true;
+                if (filtroActual === "destacados") return Boolean(evento.destacado);
                 if (filtroActual === "gratis") return evento.precio.toLowerCase().includes("gratis") || evento.precio.toLowerCase().includes("libre") || evento.precio.toLowerCase().includes("gratuita");
                 if (filtroActual === "pago") return /\$|donación/i.test(evento.precio) && !/gratis|libre|gratuita/i.test(evento.precio);
                 

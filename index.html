@@ -118,6 +118,7 @@ html, body { max-width: 100%; overflow-x: hidden; }
     }
 }
 </style>
+<link rel="stylesheet" href="inicio-nuevo.css">
 </head>
 <body>
 
@@ -152,6 +153,7 @@ html, body { max-width: 100%; overflow-x: hidden; }
                 <p class="animate-fade-up delay-1">
                     Descubre los mejores planes, lugares y experiencias para disfrutar la ciudad, si eres de aquí o vienes de visita.
                 </p>
+                <div class="inicio-acciones"><a class="inicio-btn" href="eventos.html">Explorar eventos →</a><a class="inicio-btn secundario" href="explora.html">Conocer lugares</a></div>
                 <a href="https://www.instagram.com/xalapaseando?utm_source=qr" target="_blank" class="ig-badge-container animate-fade-up delay-2">
                     <img src="Icons/iglogo.png" alt="Instagram" class="ig-logo-img">
                     <div class="ig-badge-texto">
@@ -164,6 +166,7 @@ html, body { max-width: 100%; overflow-x: hidden; }
     </header>
 
 
+    <div class="inicio-beneficios"><a href="eventos.html">▣ <span><b>Eventos en la ciudad</b><small>Conciertos, talleres y ferias</small></span></a><a href="explora.html">◇ <span><b>Lugares para visitar</b><small>Parques, cafés y rincones</small></span></a><a href="explora.html">♫ <span><b>Vive la cultura</b><small>Arte, historia y tradición</small></span></a><a href="comunidad.html">♡ <span><b>Comunidad local</b><small>Descubre y comparte</small></span></a></div>
     <!-- Sección de Próximos Eventos -->
     <section class="seccion-eventos-inicio">
         <div class="encabezado-eventos-inicio">
@@ -176,20 +179,21 @@ html, body { max-width: 100%; overflow-x: hidden; }
             </a>
         </div>
 
-        <div class="carrusel-eventos-inicio">
+        <div class="inicio-controles"><button type="button" id="carr-prev" aria-label="Eventos anteriores">‹</button><button type="button" id="carr-next" aria-label="Eventos siguientes">›</button><button type="button" id="carr-pausa" aria-label="Pausar carrusel">Ⅱ</button></div>
+        <div class="carrusel-eventos-inicio" tabindex="0" aria-label="Carrusel de próximos eventos">
             <div class="pista-eventos-inicio" id="eventos-inicio"></div>
         </div>
     </section>
 
 
+    <section class="inicio-bloque"><div class="inicio-titulo"><div><h2>★ Eventos destacados</h2><p>Una selección de eventos imperdibles en Xalapa.</p></div><a href="eventos.html?filtro=destacados">Ver todos los destacados →</a></div><div id="inicio-destacados" class="inicio-grid destacados"></div></section>
+    <section class="inicio-bloque"><div class="inicio-titulo"><div><h2>♧ Eventos gratuitos</h2><p>Actividades culturales y recreativas sin costo.</p></div><a href="eventos.html?filtro=gratis">Ver todos los gratuitos →</a></div><div id="inicio-gratis" class="inicio-grid gratuitos"></div></section>
     <!-- Sección Inferior: Imagen jaca_font a la izquierda y Boletín compacto a la derecha -->
     <div class="seccion-inferior-layout">
         
         <!-- Imagen lateral izquierda -->
-        <div class="imagen-lateral-jaca">
-            <img src="Icons/jaca_font.png" alt="Jacarandas y Xalapa" loading="lazy">
-        </div>
-
+        <section class="inicio-publicar" id="publicar"><span class="publicar-icono" aria-hidden="true">▣</span><h2>Sube tu evento a XalaPaseando</h2><p>¿Organizas un concierto, taller, exposición o actividad? Compártelo con nuestra comunidad.</p><button class="inicio-btn" id="abrir-publicar" type="button">Publicar mi evento →</button></section>
+        <dialog id="dialog-publicar"><form id="form-publicar" action="https://formspree.io/f/mdegawyv" method="POST"><h2>Comparte tu evento</h2><p>Envía los datos a nuestro equipo para su revisión antes de publicarlos.</p><input type="hidden" name="_subject" value="XalaPaseando: nueva propuesta de evento"><input type="hidden" name="tipo_solicitud" value="Propuesta de evento"><label>Nombre del evento<input name="evento" maxlength="150" required></label><label>Fecha<input name="fecha" type="date" required></label><label>Lugar<input name="lugar" maxlength="250" required></label><label>Horario y costo<input name="horario" maxlength="150" required></label><label>Descripción<textarea name="descripcion" maxlength="3000" required></textarea></label><label>Correo de contacto<input name="email" type="email" autocomplete="email" required></label><label>Enlace al cartel (opcional)<input name="cartel_url" type="url" placeholder="https://..."></label><small>Comparte un enlace accesible al cartel, por ejemplo de Google Drive.</small><label><input type="checkbox" name="consentimiento" value="Acepto" required style="display:inline;width:auto;margin-right:8px"> Acepto que el equipo revise los datos y me contacte sobre este evento.</label><button class="inicio-btn" type="submit">Enviar evento</button><button type="button" id="cerrar-publicar">Cerrar</button><p id="publicar-estado" role="status" aria-live="polite"></p></form></dialog>
         <!-- Boletín de suscripción más pequeño a la derecha -->
         <div class="signup-container">
             <section class="signup" id="suscripcion">
@@ -197,7 +201,7 @@ html, body { max-width: 100%; overflow-x: hidden; }
                 <h2>Suscríbete a nuestro boletín</h2>
                 <p class="sub">Sé parte de la comunidad que descubre y vive Xalapa.</p>
                 <form id="signupForm" action="https://formspree.io/f/mdegawyv" method="POST">
-                    <label class="field"><span aria-hidden="true">👤</span>
+                    <input type="hidden" name="tipo_solicitud" value="Suscripción al boletín"><input type="hidden" name="_subject" value="XalaPaseando: nueva suscripción"><label class="field"><span aria-hidden="true">👤</span>
                         <input type="text" name="nombre" placeholder="Nombre completo" autocomplete="name" required>
                     </label>
                     <label class="field"><span aria-hidden="true">✉</span>
@@ -233,82 +237,6 @@ html, body { max-width: 100%; overflow-x: hidden; }
         </div>
     </div>
 
-    <!-- Scripts necesarios -->
-    <script src="datos-eventos.js"></script>
-    <script>
-    document.addEventListener("DOMContentLoaded", () => {
-        const contenedor = document.getElementById("eventos-inicio");
-        if (!contenedor) return;
-        if (typeof eventosXalapa === "undefined" || !Array.isArray(eventosXalapa)) return;
-
-        contenedor.replaceChildren();
-
-        function crearTarjeta(evento, esDuplicado = false) {
-            const enlace = document.createElement("a");
-            enlace.className = "tarjeta-imagen-evento";
-            enlace.href = "evento-detalle.html?id=" + encodeURIComponent(evento.id);
-            if (esDuplicado) {
-                enlace.setAttribute("aria-hidden", "true");
-                enlace.tabIndex = -1;
-            }
-
-            const imagen = document.createElement("img");
-            imagen.src = evento.imagen;
-            imagen.alt = "Cartel de " + evento.nombre;
-            imagen.loading = "eager";
-
-            const info = document.createElement("div");
-            info.className = "info-evento-inicio";
-            const titulo = document.createElement("h3");
-            titulo.textContent = evento.nombre;
-            const fecha = document.createElement("p");
-            fecha.textContent = fechaVisible(evento) + " · " + horarioEvento(evento);
-            const precio = document.createElement("span");
-            precio.className = "precio-inicio";
-            precio.textContent = evento.precio;
-            if (evento.destacado || evento.etiquetas?.includes("Halloween")) {
-                const etiqueta = document.createElement("span");
-                etiqueta.className = "etiqueta-halloween-inicio";
-                etiqueta.textContent = evento.destacado ? "★ Destacado" : "Halloween";
-                info.appendChild(etiqueta);
-            }
-            info.append(titulo, fecha, precio);
-            enlace.append(imagen, info);
-            return enlace;
-        }
-
-        const vigentes = proximosEventos();
-        const eventos = [...vigentes.filter(e => e.destacado), ...vigentes.filter(e => !e.destacado)].slice(0, 10);
-        if (!eventos.length) {
-            contenedor.textContent = "No hay próximos eventos disponibles.";
-            contenedor.style.animation = "none";
-            return;
-        }
-        const grupo = document.createElement("div");
-        grupo.className = "grupo-carrusel";
-        const copia = document.createElement("div");
-        copia.className = "grupo-carrusel";
-        copia.setAttribute("aria-hidden", "true");
-        const ajustar = () => {
-            grupo.replaceChildren(); copia.replaceChildren();
-            const ancho = contenedor.parentElement.clientWidth;
-            const repeticiones = Math.max(1, Math.ceil(ancho / (eventos.length * 215)));
-            for (let i = 0; i < repeticiones; i++) {
-                eventos.forEach(e => {
-                    grupo.appendChild(crearTarjeta(e, i > 0));
-                    copia.appendChild(crearTarjeta(e, true));
-                });
-            }
-            contenedor.style.setProperty("--duracion", (grupo.scrollWidth / 28) + "s");
-        };
-        contenedor.append(grupo, copia);
-        ajustar();
-        let anchoAnterior = window.innerWidth;
-        window.addEventListener("resize", () => {
-            if (window.innerWidth !== anchoAnterior) { anchoAnterior = window.innerWidth; ajustar(); }
-        });
-    });
-    </script>
-    <script src="navegacion.js"></script>
-</body>
-</html>
+    <footer class="inicio-footer"><img src="Icons/logoX.png" alt="XalaPaseando"><p>Eventos, lugares y experiencias de Xalapa en un solo lugar.</p><div><b>Explora</b><a href="eventos.html">Eventos</a><a href="explora.html">Lugares</a></div><div><b>Comunidad</b><a href="#publicar">Publica tu evento</a><a href="comunidad.html">Comunidad</a></div><div><b>Nosotros</b><a href="nosotros.html">Acerca de XalaPaseando</a><a href="https://www.instagram.com/xalapaseando/">Instagram</a></div></footer>
+    <script src="datos-eventos.js"></script><script src="inicio-nuevo.js"></script><script src="navegacion.js"></script>
+</body></html>
